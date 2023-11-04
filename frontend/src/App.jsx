@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import './App.css'
 import PlayerCard from './components/PlayerCard'
+import UserSearchBox from './components/UserSearchBox'
 
 function App() {
   // // grab players info
   // const [playerId, setPlayerId] = useState(undefined)
 
   return (
-    <div className='game-container'>
+    <>
     <PlayerCard />
-    </div>
+    {/* <UserSearchBox /> */}
+    </>
   )
 }
 

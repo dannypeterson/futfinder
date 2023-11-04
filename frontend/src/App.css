@@ -3,52 +3,83 @@
   padding: 0;
 }
 
-.game-container {
+body {
   width: 100vw;
   height: 100dvh;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.card-container {
+  position: relative;
 }
 
 .fifa-card {
-  /* width: 40dvw; */
   height: 50dvh;
-  margin-top: 20%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
+/* .fifa-card, .player-image, .player-age, .player-nationality, .player-image-blurred, .player-position, .player-team-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+} */
 
 .player-image {
   position: absolute;
-  height: 8rem;
-  z-index: 1;
-  margin-top: 55%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-35%, -63%);
   background-color: transparent;
 }
 
 .player-image-blurred {
   filter: blur(50px);
-  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-35%, -63%);
+  background-color: transparent;
 }
 
 .player-position {
-  z-index: 1;
   position: absolute;
-  top: 19%;
-  left: 25%;
+  z-index: 1;
 }
 
 .player-age {
   z-index: 1;
-  position: absolute;
   top: 25%;
   left: 25%
 }
 
 .player-team-logo {
-  position: absolute;
   z-index: 1;
   background-color: transparent;
   top: 42%;
   right: 25%;
   width: 15%;
 }
+
+.player-nationality {
+  z-index: 1;
+  background-color: transparent;
+  top: 43%;
+  width: 15%;
+  left: 25%;
+}
+
+.user-input input{
+  border: 1px solid black;
+  padding: 10px;
+  width: 90%;
+  border-radius: 10px;
+  left: 0%;
+  bottom: 20%;
+}
+
 
