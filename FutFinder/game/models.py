@@ -1,5 +1,5 @@
 from django.db import models
-from . import constants
+from datetime import date
 
 class User(models.Model):
     username = models.CharField(max_length=50, unique=True)
@@ -8,23 +8,42 @@ class User(models.Model):
     def __str__(self) -> str:
         return self.username
 
-class Team(models.Model):
-    name = models.CharField(max_length=255, choices=constants.Teams.choices)
-    league = models.CharField(max_length=255, choices=constants.Leagues.choices)
+class Club(models.Model):
+    futdb = models.IntegerField(unique=True)
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+class Nation(models.Model):
+    futdb = models.IntegerField(unique=True)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self) -> str:
         return self.name
 
 class Player(models.Model):
-    name = models.CharField(max_length=200, unique=True)
-    age = models.IntegerField()
-    position = models.CharField(max_length=3, choices=constants.PlayerPositions.choices)
-    nationality = models.CharField(max_length=255, choices = constants.PlayerNationalities.choices)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, unique=True)
+    nationality = models.ForeignKey(Nation, on_delete=models.CASCADE)
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    dob = models.DateField()
+    position = models.CharField(max_length=3)
+    rating = models.IntegerField()
+    pace = models.IntegerField()
+    shooting = models.IntegerField()
+    passing = models.IntegerField()
+    dribbling = models.IntegerField()
+    defending = models.IntegerField()
+    physicality = models.IntegerField()
 
     def __str__(self):
         return self.name
 
+    @property
+    def age(self):
+        today = date.today()
+        age = today.year - self.dob.year
+        return age
 
 class Guess(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -11,23 +11,23 @@ const PlayerCard = ({userStrikes, playerPosition, playerClub, playerNationality,
 
     const [playerImage, setPlayerImage] = useState(undefined)
 
-    const get_ratings = async () => {
-        // const response = await axios.get('https://futdb.app/api/players/25')
-        try {
-            const response = await axios.get('https://futdb.app/api/players/25/image', {
-                headers: {
-                    'accept': 'image/png',
-                    'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY,
-                }
-            })
-            console.log(response.data)
-        } catch(error) {
-            console.log(error)
-        }
-    }
-    useEffect(() => {
-        get_ratings()
-    }, [])
+    // const get_ratings = async () => {
+    //     // const response = await axios.get('https://futdb.app/api/players/25')
+    //     try {
+    //         const response = await axios.get('https://futdb.app/api/players/25/image', {
+    //             headers: {
+    //                 'accept': 'image/png',
+    //                 'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY,
+    //             }
+    //         })
+    //         console.log(response.data)
+    //     } catch(error) {
+    //         console.log(error)
+    //     }
+    // }
+    // useEffect(() => {
+    //     get_ratings()
+    // }, [])
 
 
 

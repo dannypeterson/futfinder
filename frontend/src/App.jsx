@@ -25,7 +25,6 @@ function App() {
   // i only need to get this information once right?
 
 
-
   return (
     <>
     <PlayerCard />
