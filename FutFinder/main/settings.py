@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'futfinder_db',
         'USER': 'danny',
-        'PASSWORD': 'gobind',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '',
     }
