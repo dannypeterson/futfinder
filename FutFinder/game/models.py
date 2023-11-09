@@ -9,14 +9,14 @@ class User(models.Model):
         return self.username
 
 class Club(models.Model):
-    futdb = models.IntegerField(unique=True)
+    futdb_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self) -> str:
         return self.name
 
 class Nation(models.Model):
-    futdb = models.IntegerField(unique=True)
+    futdb_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self) -> str:
@@ -24,6 +24,7 @@ class Nation(models.Model):
 
 class Player(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    futdb_id = models.IntegerField()
     nationality = models.ForeignKey(Nation, on_delete=models.CASCADE)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     dob = models.DateField()
