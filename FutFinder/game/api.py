@@ -7,6 +7,7 @@ from .models import Player, Nation, Club
 load_dotenv()
 
 def populate_db(player_id: int):
+    #make an HTTP request to FutDB for playerid, return dict of wanted info
     api_url = f'https://futdb.app/api/players/{player_id}'
     headers = {
         'accept': 'application/json',
@@ -56,6 +57,7 @@ def get_or_create_club(futdb_club_id: int):
 
 
 def create_player(player_info: dict):
+    # create Player model instance from dictionary
     new_player = Player(
         futdb_id = player_info['futdb_id'],
         name = player_info['name'],
@@ -75,6 +77,7 @@ def create_player(player_info: dict):
     print("Player created")
 
 def get_nations(page):
+    # add futDB nations to db based on page
     api_url = f'https://futdb.app/api/nations?page={page}'
     headers = {
         'accept': 'application/json',
@@ -87,6 +90,7 @@ def get_nations(page):
     print(f"Page {page} saved to models")
 
 def get_clubs(page):
+    # add futDB nations to db based on page
     api_url = f'https://futdb.app/api/clubs?page={page}'
     headers = {
         'accept': 'application/json',

@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import date
+import requests
+import os
 
 class User(models.Model):
     username = models.CharField(max_length=50, unique=True)
@@ -14,6 +16,13 @@ class Club(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_futdb_image(self, id):
+        api_url = f'https://futdb.app/api/clubs/{id}/image'
+        headers = {
+        'accept': 'image/png',
+        'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))}
+        response = requests.get(api_url, headers=headers)
 
 class Nation(models.Model):
     futdb_id = models.IntegerField(unique=True)
