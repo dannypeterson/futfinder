@@ -2,35 +2,12 @@ import { useEffect, useState } from 'react'
 import fifaCard from '../assets/fifa-card.png'
 import axios from 'axios'
 
-const PlayerCard = ({userStrikes, playerPosition, playerClub, playerNationality, playerName}) => {
+const PlayerCard = ({userStrikes, playerData}) => {
     userStrikes = 2
     playerName = 'MESSI'
     playerPosition = 'RW'
     playerClub = 'https://media.api-sports.io/football/teams/33.png'
     playerNationality = "https://media.api-sports.io/flags/BR.svg"
-
-    const [playerImage, setPlayerImage] = useState(undefined)
-
-    // const get_ratings = async () => {
-    //     // const response = await axios.get('https://futdb.app/api/players/25')
-    //     try {
-    //         const response = await axios.get('https://futdb.app/api/players/25/image', {
-    //             headers: {
-    //                 'accept': 'image/png',
-    //                 'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY,
-    //             }
-    //         })
-    //         console.log(response.data)
-    //     } catch(error) {
-    //         console.log(error)
-    //     }
-    // }
-    // useEffect(() => {
-    //     get_ratings()
-    // }, [])
-
-
-
 
     return(
         <>

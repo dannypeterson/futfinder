@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import requests
 from dotenv import load_dotenv
+from rest_framework import viewsets
 import os
+from .models import Player
+from .serializers import PlayerSerializer
 
 load_dotenv()
 
@@ -12,16 +15,17 @@ def homepage(response):
 #     context = {}
 #     return render(response, 'homepage.html', context)
 
-def populate_db(player_id):
-    api_url = f'https://futdb.app/api/players/{player_id}'
-    headers = {
-        'accept': 'application/json',
-        'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))}
-    response = requests.get(api_url, headers=headers)
-    try:
-        data = response.json()
-        print(data)
-        print('Found player')
-    except Exception as e:
-        print(e)
-    return JsonResponse({'message': "Data populated successfully"})
+def get_random_player() -> int:
+    """
+    Pull out a random player from the db and return their id
+    """
+    return 1
+
+class PlayerViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint to send Player data to frontend
+    '''
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
+    # permission_classes = TODO add permissions for api
+

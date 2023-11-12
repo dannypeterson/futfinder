@@ -50,7 +50,7 @@ class Player(models.Model):
         return self.name
 
     @property
-    def age(self):
+    def age(self) -> int:
         today = date.today()
         age = today.year - self.dob.year
         return age
