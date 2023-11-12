@@ -11,9 +11,6 @@ load_dotenv()
 
 def homepage(response):
     return HttpResponse('Hello worldssdawa')
-# def homepage(response):
-#     context = {}
-#     return render(response, 'homepage.html', context)
 
 def get_random_player() -> int:
     """
