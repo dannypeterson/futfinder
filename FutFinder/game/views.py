@@ -6,23 +6,25 @@ from rest_framework import viewsets
 import os
 from .models import Player
 from .serializers import PlayerSerializer
+from random import choice
 
 load_dotenv()
 
 def homepage(response):
     return HttpResponse('Hello worldssdawa')
 
-def get_random_player() -> int:
-    """
-    Pull out a random player from the db and return their id
-    """
-    return 1
+def select_random_player():
+    #TODO make this more efficient with a count?
+    pk = Player.objects.values_list('pk', flat=True)
+    random_pk = choice(pk)
+    random_player = Player.objects.filter(pk=random_pk)
+    return random_player
 
 class PlayerViewSet(viewsets.ModelViewSet):
     '''
     API endpoint to send Player data to frontend
     '''
-    queryset = Player.objects.all()
+    queryset = select_random_player()
     serializer_class = PlayerSerializer
     # permission_classes = TODO add permissions for api
 

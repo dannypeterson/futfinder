@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-const UserSearchBox = ({playerData, playerStrikes}) => {
+const UserSearchBox = ({inputValue}) => {
     const [inputName, setInputName] = useState("");
 
     const handleInputName = (event) => {
@@ -17,7 +17,7 @@ const UserSearchBox = ({playerData, playerStrikes}) => {
     // }
 
     return(
-        <form className="user-input" onSubmit={checkUserGuess}>
+        <form className="user-input">
             <input type="text" placeholder="Enter a player's name here" value={inputValue} onChange={handleInputName}/>
             <button type="button">Enter</button>
         </form>

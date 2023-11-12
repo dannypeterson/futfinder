@@ -2,12 +2,9 @@ import { useEffect, useState } from 'react'
 import fifaCard from '../assets/fifa-card.png'
 import axios from 'axios'
 
-const PlayerCard = ({userStrikes, playerData}) => {
+const PlayerCard = ({userStrikes, playerData, playerImage}) => {
     userStrikes = 2
-    playerName = 'MESSI'
-    playerPosition = 'RW'
-    playerClub = 'https://media.api-sports.io/football/teams/33.png'
-    playerNationality = "https://media.api-sports.io/flags/BR.svg"
+    playerImage = 'https://selimdoyranli.com/cdn/fut-player-card/img/messi.png'
 
     return(
         <>
@@ -15,54 +12,53 @@ const PlayerCard = ({userStrikes, playerData}) => {
             <div className="player-card-top">
                 <div className="player-master-info">
                     <div className="player-rating">
-                        <span>97</span>
+                        <span>{playerData.rating}</span>
                     </div>
                     <div className="player-position">
-                        <span>{playerPosition}</span>
+                        <span>{playerData.position}</span>
                     </div>
                     <div className="player-nation">
-                        <img src={playerNationality} alt="player nation" draggable="false"/>
+                        <img src={playerData.nationality} alt="player nation" draggable="false"/>
                     </div>
                     <div className="player-club">
-                        <img src={playerClub} alt="player club" draggable="false"/>
+                        <img src={playerData.club} alt="player club" draggable="false"/>
                     </div>
                 </div>
                 <div className="player-picture">
-                    <img src={playerImage} alt="player name" draggable="false"/>
-                    {/* <img src="https://selimdoyranli.com/cdn/fut-player-card/img/messi.png" alt="player name" draggable="false"/> */}
+                    <img src={playerImage} alt="player img" draggable="false"/>
                 </div>
             </div>
             <div className="player-card-bottom">
                 <div className="player-info">
                     <div className="player-name">
-                        <span>{playerName}</span>
+                        <span>{playerData.name}</span>
                     </div>
                     <div className="player-features">
                         <div className="player-features-col">
                             <span>
-                                <div className="player-feature-value">97</div>
+                                <div className="player-feature-value">{playerData.pace}</div>
                                 <div className="player-feature-title">PAC</div>
                             </span>
                             <span>
-                                <div className="player-feature-value">95</div>
+                                <div className="player-feature-value">{playerData.shooting}</div>
                                 <div className="player-feature-title">SHO</div>
                             </span>
                             <span>
-                                <div className="player-feature-value">94</div>
+                                <div className="player-feature-value">{playerData.passing}</div>
                                 <div className="player-feature-title">PAS</div>
                             </span>
                         </div>
                         <div className="player-features-col">
                             <span>
-                                <div className="player-feature-value">99</div>
+                                <div className="player-feature-value">{playerData.dribbling}</div>
                                 <div className="player-feature-title">DRI</div>
                             </span>
                             <span>
-                                <div className="player-feature-value">35</div>
+                                <div className="player-feature-value">{playerData.defending}</div>
                                 <div className="player-feature-title">DEF</div>
                             </span>
                             <span>
-                                <div className="player-feature-value">68</div>
+                                <div className="player-feature-value">{playerData.physicality}</div>
                                 <div className="player-feature-title">PHY</div>
                             </span>
                         </div>

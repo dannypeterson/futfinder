@@ -11,8 +11,8 @@ function App() {
   const get_random_player = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/player/',)
-      console.log(response)
-      setPlayerData(response.data)
+      console.log(response.data[0])
+      setPlayerData(response.data[0])
   } catch(error) {
       console.log(error)
   }
@@ -29,7 +29,7 @@ function App() {
 
   return (
     <>
-    <PlayerCard />
+    {playerData && <PlayerCard playerData = {playerData}/>}
     <UserSearchBox />
     </>
   )
