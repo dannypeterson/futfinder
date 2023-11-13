@@ -7,6 +7,8 @@ import os
 from .models import Player
 from .serializers import PlayerSerializer
 from random import choice
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 load_dotenv()
 
@@ -28,3 +30,13 @@ class PlayerViewSet(viewsets.ModelViewSet):
     serializer_class = PlayerSerializer
     # permission_classes = TODO add permissions for api
 
+@csrf_exempt
+def search_box_autofill(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        search_query = data.get('search_query', '')
+
+        results = Player.objects.filter(name__icontains=search_query)
+        player_list = [{'pk': player.pk, 'name': player.name} for player in results]
+        return JsonResponse({'results': player_list})
+    return JsonResponse({'error': 'Invalid request method'}, status=400)

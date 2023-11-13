@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import PlayerCard from './components/PlayerCard'
-import UserSearchBox from './components/UserSearchBox'
+import SearchBox from './components/SearchBox'
 import axios from 'axios'
 
 function App() {
@@ -37,12 +37,13 @@ function App() {
     <>
       {playerData && <PlayerCard playerData={playerData} remainingAttempts={remainingAttempts} gameOver={gameOver} />}
       <div className="user-input">
-        <input
+        {/* <input
           type="text"
           placeholder="Enter a player's name here"
           value={userGuess}
           onChange={(e) => setUserGuess(e.target.value)}
-        />
+        /> */}
+        <SearchBox />
         {playerData && <button onClick={handleGuess} type="button">
           Enter
         </button>}
