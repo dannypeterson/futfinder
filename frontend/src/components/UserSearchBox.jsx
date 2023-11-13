@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react"
-const UserSearchBox = () => {
-    const [inputValue, setInputValue] = useState("");
 
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
+const UserSearchBox = ({inputValue}) => {
+    const [inputName, setInputName] = useState("");
 
+    const handleInputName = (event) => {
+        setInputName(event.target.value);
     };
+
+    // const checkUserGuess = (input) => {
+    //     if (input != playerData.name) {
+    //         // increment strikes: POST request
+
+    //     } else {
+    //         // correct checkUserGuess, reveal name and photo, update user points?
+    //     }
+    // }
+
     return(
-        <div className="user-input">
-            <input type="text" placeholder="Enter a player name here" value={inputValue} onChange={handleInputChange}/>
-            <button type="button">Go</button>
-        </div>
+        <form className="user-input">
+            <input type="text" placeholder="Enter a player's name here" value={inputValue} onChange={handleInputName}/>
+            <button type="button">Enter</button>
+        </form>
     )
 }
 

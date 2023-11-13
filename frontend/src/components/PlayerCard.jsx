@@ -1,100 +1,103 @@
 import { useEffect, useState } from 'react'
 import fifaCard from '../assets/fifa-card.png'
 import axios from 'axios'
+import App from '../App'
 
-const PlayerCard = ({userStrikes, playerPosition, playerClub, playerNationality, playerName}) => {
-    userStrikes = 2
-    playerName = 'MESSI'
-    playerPosition = 'RW'
-    playerClub = 'https://media.api-sports.io/football/teams/33.png'
-    playerNationality = "https://media.api-sports.io/flags/BR.svg"
+const PlayerCard = ({ remainingAttempts, playerData, playerImage, gameOver }) => {
+  playerImage = 'https://selimdoyranli.com/cdn/fut-player-card/img/messi.png'
 
-    const [playerImage, setPlayerImage] = useState(undefined)
-
-    // const get_ratings = async () => {
-    //     // const response = await axios.get('https://futdb.app/api/players/25')
-    //     try {
-    //         const response = await axios.get('https://futdb.app/api/players/25/image', {
-    //             headers: {
-    //                 'accept': 'image/png',
-    //                 'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY,
-    //             }
-    //         })
-    //         console.log(response.data)
-    //     } catch(error) {
-    //         console.log(error)
-    //     }
-    // }
-    // useEffect(() => {
-    //     get_ratings()
-    // }, [])
-
-
-
-
-    return(
-        <>
-        <div className="fut-player-card">
-            <div className="player-card-top">
-                <div className="player-master-info">
-                    <div className="player-rating">
-                        <span>97</span>
-                    </div>
-                    <div className="player-position">
-                        <span>{playerPosition}</span>
-                    </div>
-                    <div className="player-nation">
-                        <img src={playerNationality} alt="player nation" draggable="false"/>
-                    </div>
-                    <div className="player-club">
-                        <img src={playerClub} alt="player club" draggable="false"/>
-                    </div>
-                </div>
-                <div className="player-picture">
-                    <img src={playerImage} alt="player name" draggable="false"/>
-                    {/* <img src="https://selimdoyranli.com/cdn/fut-player-card/img/messi.png" alt="player name" draggable="false"/> */}
-                </div>
+  return (
+    <>
+      <div className="fut-player-card">
+        <div className="player-card-top">
+          <div className="player-master-info">
+            <div className="player-rating">
+              <span>{playerData.rating}</span>
             </div>
-            <div className="player-card-bottom">
-                <div className="player-info">
-                    <div className="player-name">
-                        <span>{playerName}</span>
-                    </div>
-                    <div className="player-features">
-                        <div className="player-features-col">
-                            <span>
-                                <div className="player-feature-value">97</div>
-                                <div className="player-feature-title">PAC</div>
-                            </span>
-                            <span>
-                                <div className="player-feature-value">95</div>
-                                <div className="player-feature-title">SHO</div>
-                            </span>
-                            <span>
-                                <div className="player-feature-value">94</div>
-                                <div className="player-feature-title">PAS</div>
-                            </span>
-                        </div>
-                        <div className="player-features-col">
-                            <span>
-                                <div className="player-feature-value">99</div>
-                                <div className="player-feature-title">DRI</div>
-                            </span>
-                            <span>
-                                <div className="player-feature-value">35</div>
-                                <div className="player-feature-title">DEF</div>
-                            </span>
-                            <span>
-                                <div className="player-feature-value">68</div>
-                                <div className="player-feature-title">PHY</div>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+            <div className="player-position">
+              {remainingAttempts <= 2 ? (
+                <span>{playerData.position}</span>
+              ) : (
+                <span>?</span>
+              )}
             </div>
+            <div className="player-nation">
+              {remainingAttempts <= 1 ? (
+                <img
+                  src={playerData.nationality}
+                  alt="nation"
+                  draggable="false"
+                />
+              ) : null}
+            </div>
+            <div className="player-club">
+              {remainingAttempts == 0 ? (
+                <img src={playerData.club} alt="club" draggable="false" />
+              ) : null}
+            </div>
+          </div>
+          <div className="player-picture">
+            {gameOver ? (
+              <img src={playerImage} alt="player img" draggable="false" />
+            ) : (
+              <img src={playerImage} style={{ filter: 'brightness(0)' }} alt="silouette" draggable="false" />
+            )}
+          </div>
         </div>
-        </>
-    )
+        <div className="player-card-bottom">
+          <div className="player-info">
+            <div className="player-name">
+              {gameOver ? (
+                <span>{playerData.name}</span>
+              ) : (
+                <span style={{ opacity: 0 }}>UNKNOWN PLAYER</span>
+              )}
+            </div>
+            <div className="player-features">
+              <div className="player-features-col">
+                <span>
+                  <div className="player-feature-value">{playerData.pace}</div>
+                  <div className="player-feature-title">PAC</div>
+                </span>
+                <span>
+                  <div className="player-feature-value">
+                    {playerData.shooting}
+                  </div>
+                  <div className="player-feature-title">SHO</div>
+                </span>
+                <span>
+                  <div className="player-feature-value">
+                    {playerData.passing}
+                  </div>
+                  <div className="player-feature-title">PAS</div>
+                </span>
+              </div>
+              <div className="player-features-col">
+                <span>
+                  <div className="player-feature-value">
+                    {playerData.dribbling}
+                  </div>
+                  <div className="player-feature-title">DRI</div>
+                </span>
+                <span>
+                  <div className="player-feature-value">
+                    {playerData.defending}
+                  </div>
+                  <div className="player-feature-title">DEF</div>
+                </span>
+                <span>
+                  <div className="player-feature-value">
+                    {playerData.physicality}
+                  </div>
+                  <div className="player-feature-title">PHY</div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default PlayerCard

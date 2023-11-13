@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import date
+import requests
+import os
 
 class User(models.Model):
     username = models.CharField(max_length=50, unique=True)
@@ -9,14 +11,21 @@ class User(models.Model):
         return self.username
 
 class Club(models.Model):
-    futdb = models.IntegerField(unique=True)
+    futdb_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self) -> str:
         return self.name
 
+    def get_futdb_image(self, id):
+        api_url = f'https://futdb.app/api/clubs/{id}/image'
+        headers = {
+        'accept': 'image/png',
+        'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))}
+        response = requests.get(api_url, headers=headers)
+
 class Nation(models.Model):
-    futdb = models.IntegerField(unique=True)
+    futdb_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self) -> str:
@@ -24,6 +33,7 @@ class Nation(models.Model):
 
 class Player(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    futdb_id = models.IntegerField()
     nationality = models.ForeignKey(Nation, on_delete=models.CASCADE)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     dob = models.DateField()
@@ -40,7 +50,7 @@ class Player(models.Model):
         return self.name
 
     @property
-    def age(self):
+    def age(self) -> int:
         today = date.today()
         age = today.year - self.dob.year
         return age
