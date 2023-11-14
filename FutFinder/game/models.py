@@ -17,13 +17,6 @@ class Club(models.Model):
     def __str__(self) -> str:
         return self.name
 
-    def get_futdb_image(self, id):
-        api_url = f'https://futdb.app/api/clubs/{id}/image'
-        headers = {
-        'accept': 'image/png',
-        'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))}
-        response = requests.get(api_url, headers=headers)
-
 class Nation(models.Model):
     futdb_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=255, unique=True)

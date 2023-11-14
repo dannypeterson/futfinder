@@ -20,9 +20,8 @@ function App() {
       const response = await axios.get('http://127.0.0.1:8000/player/')
       setPlayerData(response.data[0])
       const futdbID = response.data[0].futdb_id
-      const nationID = response.data[0].nationality
-      const clubID = response.data[0].club
-      console.log(clubID)
+      const nationID = response.data[0].nationality.futdb_id
+      const clubID = response.data[0].club.futdb_id
 
       // player image
       const imageResponse = await axios.get(`https://futdb.app/api/players/${futdbID}/image`, {
