@@ -3,8 +3,7 @@ import fifaCard from '../assets/fifa-card.png'
 import axios from 'axios'
 import App from '../App'
 
-const PlayerCard = ({ remainingAttempts, playerData, playerImage, gameOver }) => {
-  playerImage = 'https://selimdoyranli.com/cdn/fut-player-card/img/messi.png'
+const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, playerNation, gameOver, }) => {
 
   return (
     <>
@@ -17,14 +16,12 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, gameOver }) =>
             <div className="player-position">
               {remainingAttempts <= 2 ? (
                 <span>{playerData.position}</span>
-              ) : (
-                <span>?</span>
-              )}
+              ) : null}
             </div>
             <div className="player-nation">
               {remainingAttempts <= 1 ? (
                 <img
-                  src={playerData.nationality}
+                  src={playerNation}
                   alt="nation"
                   draggable="false"
                 />
@@ -32,7 +29,7 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, gameOver }) =>
             </div>
             <div className="player-club">
               {remainingAttempts == 0 ? (
-                <img src={playerData.club} alt="club" draggable="false" />
+                <img src={playerClub} alt="club" draggable="false" />
               ) : null}
             </div>
           </div>

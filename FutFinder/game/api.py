@@ -101,3 +101,13 @@ def get_clubs(page):
         new_club = Club(futdb_id=club['id'], name=club['name'])
         new_club.save()
     print(f"Page {page} saved to models")
+
+def get_player_image(player_id):
+    api_url = f'https://futdb.app/api/players/{player_id}/image'
+    headers = {
+        'accept': 'image/png',
+        'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))
+    }
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        print(response)
