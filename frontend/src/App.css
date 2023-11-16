@@ -12,23 +12,21 @@
 
 
 /* SEARCH BAR  */
-.user-input {
+.player-search-bar {
+    position: relative;
 	display: flex;
 	justify-content: center;
 	margin-top: 2rem;
 }
 
-.user-input input{
+.player-search-bar input {
 	border: 1px solid gray;
 	padding: 8px;
 	border-radius: 10px;
 }
 
-.user-input button {
+.player-search-bar button {
 	margin-left: 0.5rem;
-}
-.player-search-bar {
-    position: relative;
 }
 
 .suggestions-dropdown {

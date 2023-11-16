@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 
-const UserSearchBox = () => {
-    const [query, setQuery] = useState('');
+const UserSearchBox = ({ query, setQuery, handleGuess }) => {
+
     const [results, setResults] = useState([]);
     const [debouncedQuery, setDebouncedQuery] = useState('');
 
@@ -51,6 +51,9 @@ const UserSearchBox = () => {
                     ))}
                 </ul>
             )}
+            <button type="button" onClick={handleGuess}>
+                Go
+            </button>
         </div>
     );
 }

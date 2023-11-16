@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import PlayerCard from './components/PlayerCard'
 import axios from 'axios'
-import UserSearchBox from './components/UserSearchBox'
+import Game from './components/Game'
 
 function App() {
+  // player data
   const [playerData, setPlayerData] = useState(null)
   const [playerImage, setPlayerImage] = useState(null)
   const [playerNation, setPlayerNation] = useState(null)
   const [playerClub, setPlayerClub] = useState(null)
-  const [remainingAttempts, setRemainingAttempts] = useState(3)
-  const [userGuess, setUserGuess] = useState('')
-  const [gameOver, setGameOver] = useState(false)
-  const [isCorrect, setIsCorrect] = useState(false)
 
   const getPlayerFromDB = async () => {
     try {
@@ -64,14 +60,7 @@ function App() {
     }
   }
 
-  const handleGuess = () => {
-    if (userGuess != playerData.name && remainingAttempts > 0) {
-      setRemainingAttempts(remainingAttempts - 1)
-    } else {
-      console.log('Player revealed')
-      setGameOver(true)
-    }
-  }
+
 
   useEffect(() => {
     getPlayerFromDB()
@@ -79,14 +68,8 @@ function App() {
 
   return (
     <>
-      {playerData && <PlayerCard playerData={playerData} remainingAttempts={remainingAttempts} gameOver={gameOver} playerImage={playerImage} playerClub={playerClub} playerNation={playerNation} />}
-      <div className="user-input">
-        <UserSearchBox />
-        {playerData && <button onClick={handleGuess} type="button">
-          Go
-        </button>}
-      </div>
-      <p>Remaining Attempts: {remainingAttempts}</p>
+      <Game playerData={playerData} playerImage={playerImage} playerClub={playerClub} playerNation={playerNation} />
+      {/* <p>Remaining Attempts: {remainingAttempts}</p> */}
     </>
   )
 }

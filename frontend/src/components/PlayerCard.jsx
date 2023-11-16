@@ -1,8 +1,3 @@
-import { useEffect, useState } from 'react'
-import fifaCard from '../assets/fifa-card.png'
-import axios from 'axios'
-import App from '../App'
-
 const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, playerNation, gameOver, }) => {
 
   return (
