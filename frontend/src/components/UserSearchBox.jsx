@@ -3,11 +3,20 @@ import React, { useEffect, useState } from "react"
 const UserSearchBox = () => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
+    const [debouncedQuery, setDebouncedQuery] = useState('');
 
     const handleSelectPlayer = (selectedPlayer) => {
         setQuery(selectedPlayer)
         setResults([])
     }
+
+    useEffect(() => {
+        const debounceTimeout = setTimeout(() => {
+            setDebouncedQuery(query);
+        }, 400);
+
+        return () => clearTimeout(debounceTimeout);
+    }, [query]);
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -20,12 +29,12 @@ const UserSearchBox = () => {
             }
         };
 
-        if (query.trim() !== '') {
+        if (debouncedQuery.trim() !== '') {
             fetchResults();
         } else {
             setResults([]);
         }
-    }, [query]);
+    }, [debouncedQuery]);
 
     return (
         <div className="player-search-bar">
