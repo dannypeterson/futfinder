@@ -57,7 +57,7 @@ def get_or_create_club(futdb_club_id: int):
 
 
 def create_player(player_info: dict):
-    # create Player model instance from dictionary
+    # create Player model instance from dictionary, use populate_db(futdb id)
     new_player = Player(
         futdb_id = player_info['futdb_id'],
         name = player_info['name'],

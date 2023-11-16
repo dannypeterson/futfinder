@@ -3,6 +3,7 @@ import './App.css'
 import PlayerCard from './components/PlayerCard'
 import SearchBox from './components/SearchBox'
 import axios from 'axios'
+import UserSearchBox from './components/UserSearchBox'
 
 function App() {
   const [playerData, setPlayerData] = useState(null)
@@ -64,8 +65,6 @@ function App() {
     }
   }
 
-
-
   const handleGuess = () => {
     if (userGuess != playerData.name && remainingAttempts > 0) {
       setRemainingAttempts(remainingAttempts - 1)
@@ -83,16 +82,10 @@ function App() {
     <>
       {playerData && <PlayerCard playerData={playerData} remainingAttempts={remainingAttempts} gameOver={gameOver} playerImage={playerImage} playerClub={playerClub} playerNation={playerNation} />}
       <div className="user-input">
-        {/* <input
-          type="text"
-          placeholder="Enter a player's name here"
-          value={userGuess}
-          onChange={(e) => setUserGuess(e.target.value)}
-        /> */}
-        {/* {playerData && <button onClick={handleGuess} type="button">
-          Enter
-        </button>} */}
-        <SearchBox handleGuess={handleGuess} />
+        <UserSearchBox />
+        {playerData && <button onClick={handleGuess} type="button">
+          Go
+        </button>}
       </div>
       <p>Remaining Attempts: {remainingAttempts}</p>
     </>

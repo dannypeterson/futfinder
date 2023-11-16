@@ -15,12 +15,12 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, pl
             </div>
             <div className="player-position">
               {remainingAttempts <= 2 ? (
-                <span>{playerData.position}</span>
+                <span className='reveal-position'>{playerData.position}</span>
               ) : null}
             </div>
             <div className="player-nation">
               {remainingAttempts <= 1 ? (
-                <img
+                <img className='reveal-nation'
                   src={playerNation}
                   alt="nation"
                   draggable="false"
@@ -29,13 +29,13 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, pl
             </div>
             <div className="player-club">
               {remainingAttempts == 0 ? (
-                <img src={playerClub} alt="club" draggable="false" />
+                <img src={playerClub} alt="club" draggable="false" className='reveal-club' />
               ) : null}
             </div>
           </div>
           <div className="player-picture">
             {gameOver ? (
-              <img src={playerImage} alt="player img" draggable="false" />
+              <img src={playerImage} alt="player img" draggable="false" className='reveal-player' />
             ) : (
               <img src={playerImage} style={{ filter: 'brightness(0)' }} alt="silouette" draggable="false" />
             )}
@@ -45,7 +45,7 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, pl
           <div className="player-info">
             <div className="player-name">
               {gameOver ? (
-                <span>{playerData.name}</span>
+                <span className='reveal-name'>{playerData.name}</span>
               ) : (
                 <span style={{ opacity: 0 }}>UNKNOWN PLAYER</span>
               )}
