@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import PlayerCard from './components/PlayerCard'
-import SearchBox from './components/SearchBox'
 import axios from 'axios'
 import UserSearchBox from './components/UserSearchBox'
 
