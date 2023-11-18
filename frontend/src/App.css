@@ -10,7 +10,6 @@
     }
 }
 
-
 /* SEARCH BAR  */
 .player-search-bar {
     position: relative;
@@ -53,6 +52,28 @@
 
 .suggestions-dropdown li:last-child {
     border-bottom: none;
+}
+
+/* USER GUESSES  */
+.guesses-list {
+    margin: 0;
+    padding: 0;
+	background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+	border-radius: 5px;
+	overflow-y: auto;
+	max-height: 6rem;
+}
+
+.guesses-list li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px;
+    border-bottom: 1px solid #ccc;
+	list-style: none;
+	animation: fadeIn 1s ease;
 }
 
 /* FIFA CARD CSS  */
