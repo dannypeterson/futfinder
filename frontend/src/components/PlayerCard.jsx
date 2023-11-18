@@ -1,4 +1,4 @@
-const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, playerNation, gameOver, }) => {
+const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, playerNation, gameOver, revealAttribute }) => {
 
   return (
     <>
@@ -9,12 +9,12 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, pl
               <span>{playerData.rating}</span>
             </div>
             <div className="player-position">
-              {remainingAttempts <= 2 ? (
+              {revealAttribute.position ? (
                 <span className='reveal-position'>{playerData.position}</span>
-              ) : null}
+              ) : <span style={{ 'opacity': 0 }}>POS</span>}
             </div>
             <div className="player-nation">
-              {remainingAttempts <= 1 ? (
+              {revealAttribute.nation ? (
                 <img className='reveal-nation'
                   src={playerNation}
                   alt="nation"
@@ -23,7 +23,7 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, pl
               ) : null}
             </div>
             <div className="player-club">
-              {remainingAttempts == 0 ? (
+              {revealAttribute.club ? (
                 <img src={playerClub} alt="club" draggable="false" className='reveal-club' />
               ) : null}
             </div>

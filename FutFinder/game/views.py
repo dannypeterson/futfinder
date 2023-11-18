@@ -35,7 +35,13 @@ class PlayerSearchView(View):
     def get(self, request, *args, **kwargs):
         query = request.GET.get('query', '')
         players = Player.objects.filter(name__icontains = query)
-        player_names = [player.name for player in players]
+        player_names = [{
+            'futdb_id': player.futdb_id,
+            'name': player.name,
+            'position': player.position,
+            'club': player.club.futdb_id,
+            'nation': player.nationality.futdb_id
+        } for player in players]
         return JsonResponse({'players': player_names}, safe=False)
 
 # @csrf_exempt
