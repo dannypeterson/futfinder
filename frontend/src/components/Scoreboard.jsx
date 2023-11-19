@@ -1,8 +1,9 @@
-const Scoreboard = ({ remainingAttempts }) => {
+const Scoreboard = ({ remainingAttempts, currentGuess, setCurrentGuess, }) => {
 
+    const remaining_attempts = 5 - currentGuess
     return (
         <>
-            <p>Attempts remaining: {remainingAttempts}</p>
+            <p>Attempts remaining: {remaining_attempts}</p>
         </>
     )
 }

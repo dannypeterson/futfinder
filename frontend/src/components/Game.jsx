@@ -20,6 +20,7 @@ const Game = ({
     const [isCorrect, setIsCorrect] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
     const [userGuess, setUserGuess] = useState({})
+    const [currentGuess, setCurrentGuess] = useState(0)
 
     const [revealAttribute, setRevealAttribute] = useState({
         position: false,
@@ -31,6 +32,10 @@ const Game = ({
         const attributesObject = window.localStorage.getItem('REVEAL_ATTRIBUTES')
         if (attributesObject) {
             setRevealAttribute(JSON.parse(attributesObject))
+        }
+        const guessLocalStorage = window.localStorage.getItem('CURRENT_GUESS')
+        if (guessLocalStorage) {
+            setCurrentGuess(JSON.parse(guessLocalStorage))
         }
     }, [])
 
@@ -74,8 +79,16 @@ const Game = ({
         }
     }
 
+    const decrementGuess = () => {
+        setCurrentGuess((prevGuess) => {
+            const updatedGuess = prevGuess + 1
+            window.localStorage.setItem('CURRENT_GUESS', JSON.stringify(updatedGuess))
+            return updatedGuess
+        })
+    }
     // user submits guess, check attributes
     const handleGuess = () => {
+        decrementGuess()
         updateGuessList()
         revealAttributeIfCorrect(
             'position',
@@ -118,7 +131,7 @@ const Game = ({
                 handleGuess={handleGuess}
                 setUserGuess={setUserGuess}
             />
-            <Scoreboard remainingAttempts={remainingAttempts} />
+            <Scoreboard remainingAttempts={remainingAttempts} currentGuess={currentGuess} setCurrentGuess={setCurrentGuess} />
             <Result
                 playerData={playerData}
                 userGuess={userGuess}
