@@ -1,4 +1,4 @@
-const PlayerCard = ({ remainingAttempts, playerData, playerImage, playerClub, playerNation, gameOver, isCorrect, revealAttribute }) => {
+const PlayerCard = ({ playerData, playerImage, playerClub, playerNation, gameOver, isCorrect, revealAttribute }) => {
 
   return (
     <>

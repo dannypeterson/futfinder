@@ -15,7 +15,7 @@ const Game = ({
 
 
     // game functionality
-    const [remainingAttempts, setRemainingAttempts] = useState(3)
+    // const [remainingAttempts, setRemainingAttempts] = useState(3)
     const [gameOver, setGameOver] = useState(false)
     const [isCorrect, setIsCorrect] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
@@ -28,6 +28,7 @@ const Game = ({
         nation: false
     })
 
+    // UPDATE LOCAL STORAGE
     useEffect(() => {
         const attributesObject = window.localStorage.getItem('REVEAL_ATTRIBUTES')
         if (attributesObject) {
@@ -68,14 +69,11 @@ const Game = ({
         guessAttribute
     ) => {
         if (playerAttribute === guessAttribute) {
-            // setRevealAttribute((prevState) => ({ ...prevState, [attribute]: true }))
             setRevealAttribute((prevState) => {
                 const updatedState = { ...prevState, [attribute]: true }
                 window.localStorage.setItem('REVEAL_ATTRIBUTES', JSON.stringify(updatedState))
                 return updatedState
             })
-            // set attribute to local storage
-            // window.localStorage.setItem('REVEAL_ATTRIBUTES', JSON.stringify(updatedAttributeList))
         }
     }
 
@@ -85,8 +83,11 @@ const Game = ({
             window.localStorage.setItem('CURRENT_GUESS', JSON.stringify(updatedGuess))
             return updatedGuess
         })
+        if (currentGuess >= 5) {
+            setGameOver(true)
+        }
     }
-    // user submits guess, check attributes
+
     const handleGuess = () => {
         decrementGuess()
         updateGuessList()
@@ -101,13 +102,9 @@ const Game = ({
             playerData.nationality.futdb_id,
             userGuess.nation
         )
-
         if (checkCorrectGuess()) {
             return
         }
-
-        console.log('nothing correct, decrement user attempts')
-
         setSearchQuery('')
     }
 
@@ -119,7 +116,7 @@ const Game = ({
                     playerImage={playerImage}
                     playerClub={playerClub}
                     playerNation={playerNation}
-                    remainingAttempts={remainingAttempts}
+                    currentGuess={currentGuess}
                     gameOver={gameOver}
                     isCorrect={isCorrect}
                     revealAttribute={revealAttribute}
@@ -131,7 +128,7 @@ const Game = ({
                 handleGuess={handleGuess}
                 setUserGuess={setUserGuess}
             />
-            <Scoreboard remainingAttempts={remainingAttempts} currentGuess={currentGuess} setCurrentGuess={setCurrentGuess} />
+            <Scoreboard currentGuess={currentGuess} />
             <Result
                 playerData={playerData}
                 userGuess={userGuess}
