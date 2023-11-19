@@ -3,6 +3,7 @@ import UserSearchBox from './UserSearchBox'
 import Scoreboard from './Scoreboard'
 import Result from './Result'
 import { useEffect, useState } from 'react'
+import GameOverModal from './GameOverModal'
 
 const Game = ({
     playerData,
@@ -138,6 +139,7 @@ const Game = ({
                 revealAttribute={revealAttribute}
                 setRevealAttribute={setRevealAttribute}
             />
+            <GameOverModal />
         </>
     )
 }
