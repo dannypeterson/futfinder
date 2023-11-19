@@ -76,6 +76,22 @@
 	animation: fadeIn 1s ease;
 }
 
+/* GAME OVER SCREEN  */
+.game-over-screen {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 48%;
+	background-color: #333;
+	text-align: center;
+	padding: 2rem;
+	box-sizing: border-box;
+	z-index: 2;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+}
+
 /* FIFA CARD CSS  */
 * {
 	margin: 0;

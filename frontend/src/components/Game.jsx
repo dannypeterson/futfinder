@@ -3,7 +3,7 @@ import UserSearchBox from './UserSearchBox'
 import Scoreboard from './Scoreboard'
 import Result from './Result'
 import { useEffect, useState } from 'react'
-import GameOverModal from './GameOverModal'
+import GameOver from './GameOver'
 
 const Game = ({
     playerData,
@@ -78,7 +78,7 @@ const Game = ({
         }
     }
 
-    const decrementGuess = () => {
+    const incrementGuess = () => {
         setCurrentGuess((prevGuess) => {
             const updatedGuess = prevGuess + 1
             window.localStorage.setItem('CURRENT_GUESS', JSON.stringify(updatedGuess))
@@ -90,7 +90,7 @@ const Game = ({
     }
 
     const handleGuess = () => {
-        decrementGuess()
+        incrementGuess()
         updateGuessList()
         revealAttributeIfCorrect(
             'position',
@@ -139,7 +139,7 @@ const Game = ({
                 revealAttribute={revealAttribute}
                 setRevealAttribute={setRevealAttribute}
             />
-            <GameOverModal />
+            {gameOver && <GameOver playerData={playerData} guessList={guessList} />}
         </>
     )
 }
