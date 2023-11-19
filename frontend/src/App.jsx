@@ -10,66 +10,92 @@ function App() {
   const [playerNation, setPlayerNation] = useState(null)
   const [playerClub, setPlayerClub] = useState(null)
 
-  const getPlayerFromDB = async () => {
-    try {
-      // player data
-      const response = await axios.get('http://127.0.0.1:8000/player/')
-      setPlayerData(response.data[0])
-      const futdbID = response.data[0].futdb_id
-      const nationID = response.data[0].nationality.futdb_id
-      const clubID = response.data[0].club.futdb_id
-
-      // player image
-      const imageResponse = await axios.get(`https://futdb.app/api/players/${futdbID}/image`, {
-        headers: {
-          'accept': 'image/png',
-          'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY
-        },
-        responseType: 'arraybuffer'
-      })
-      const imageBlob = new Blob([imageResponse.data], { type: 'image/png' });
-      const imageUrl = URL.createObjectURL(imageBlob);
-      setPlayerImage(imageUrl)
-
-      // nation image
-      const nationResponse = await axios.get(`https://futdb.app/api/nations/${nationID}/image`, {
-        headers: {
-          'accept': 'image/png',
-          'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY
-        },
-        responseType: 'arraybuffer'
-      })
-      const nationBlob = new Blob([nationResponse.data], { type: 'image/png' });
-      const nationUrl = URL.createObjectURL(nationBlob);
-      setPlayerNation(nationUrl)
-
-      // club image
-      const clubResponse = await axios.get(`https://futdb.app/api/clubs/${clubID}/image`, {
-        headers: {
-          'accept': 'image/png',
-          'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY
-        },
-        responseType: 'arraybuffer'
-      })
-      const clubBlob = new Blob([clubResponse.data], { type: 'image/png' });
-      const clubUrl = URL.createObjectURL(clubBlob);
-      setPlayerClub(clubUrl)
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
+  const [guessList, setGuessList] = useState([])
 
 
   useEffect(() => {
+    const getPlayerFromDB = async () => {
+      // TODO add information to local Storage ?
+      // this func should only run once every 24hr, so need to cache it and check cache before running this func
+      try {
+        // player data
+        const response = await axios.get('http://127.0.0.1:8000/player/')
+        setPlayerData(response.data[0])
+        const futdbID = response.data[0].futdb_id
+        const nationID = response.data[0].nationality.futdb_id
+        const clubID = response.data[0].club.futdb_id
+
+        // player image
+        const imageResponse = await axios.get(
+          `https://futdb.app/api/players/${futdbID}/image`,
+          {
+            headers: {
+              accept: 'image/png',
+              'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY
+            },
+            responseType: 'arraybuffer'
+          }
+        )
+        const imageBlob = new Blob([imageResponse.data], { type: 'image/png' })
+        const imageUrl = URL.createObjectURL(imageBlob)
+        setPlayerImage(imageUrl)
+
+        // nation image
+        const nationResponse = await axios.get(
+          `https://futdb.app/api/nations/${nationID}/image`,
+          {
+            headers: {
+              accept: 'image/png',
+              'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY
+            },
+            responseType: 'arraybuffer'
+          }
+        )
+        const nationBlob = new Blob([nationResponse.data], { type: 'image/png' })
+        const nationUrl = URL.createObjectURL(nationBlob)
+        setPlayerNation(nationUrl)
+
+        // club image
+        const clubResponse = await axios.get(
+          `https://futdb.app/api/clubs/${clubID}/image`,
+          {
+            headers: {
+              accept: 'image/png',
+              'X-AUTH-TOKEN': import.meta.env.VITE_FUTDB_KEY
+            },
+            responseType: 'arraybuffer'
+          }
+        )
+        const clubBlob = new Blob([clubResponse.data], { type: 'image/png' })
+        const clubUrl = URL.createObjectURL(clubBlob)
+        setPlayerClub(clubUrl)
+      } catch (error) {
+        console.log(error)
+      }
+    }
     getPlayerFromDB()
   }, [])
 
+  useEffect(() => {
+    // CHECK LOCAL STORAGE FOR GAME PROGRESS
+    const userGuessList = window.localStorage.getItem('USER_GUESS_LIST')
+    if (playerData) {
+      if (userGuessList) {
+        setGuessList(JSON.parse(userGuessList))
+      }
+    }
+  }, [playerData])
+
   return (
     <>
-      <Game playerData={playerData} playerImage={playerImage} playerClub={playerClub} playerNation={playerNation} />
-      {/* <p>Remaining Attempts: {remainingAttempts}</p> */}
+      <Game
+        playerData={playerData}
+        playerImage={playerImage}
+        playerClub={playerClub}
+        playerNation={playerNation}
+        guessList={guessList}
+        setGuessList={setGuessList}
+      />
     </>
   )
 }
