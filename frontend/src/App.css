@@ -78,6 +78,8 @@
 
 /* GAME OVER SCREEN  */
 .game-over-screen {
+	display: flex;
+	flex-direction: column;
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -90,6 +92,7 @@
 	z-index: 2;
 	border: 1px solid #ccc;
 	border-radius: 10px;
+	color: #e9cc74;
 }
 
 /* FIFA CARD CSS  */

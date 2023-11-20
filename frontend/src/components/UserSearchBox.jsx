@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess }) => {
+const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess, alreadyGuessed }) => {
 
     // props:
     // const [searchQuery, setSearchQuery] = useState('');
@@ -15,6 +15,7 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess 
         setResults([]) // TODO clear search results after user selects player
     }
 
+    // debouncing query
     useEffect(() => {
         const debounceTimeout = setTimeout(() => {
             setDebouncedQuery(searchQuery);
@@ -59,6 +60,7 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess 
             <button type="button" onClick={handleGuess}>
                 Go
             </button>
+            {alreadyGuessed && <p className="text-warning">You have already guessed this player</p>}
         </div>
     );
 }

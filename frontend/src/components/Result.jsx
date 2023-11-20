@@ -1,10 +1,10 @@
 
 
-const Result = ({ playerData, userGuess, guessList, playerClub, playerNation, revealAttribute }) => {
+const Result = ({ playerData, userGuess, guessList, playerClub, playerNation, revealAttribute, }) => {
 
     return (
         <ul className="guesses-list">
-            {guessList.length > 0 && guessList.reverse().map((player) => (
+            {guessList.length > 0 && [...guessList].reverse().map((player) => (
                 <li key={player.futdb_id}>{player.name}
                     {player.is_correct && <span>✔️</span>}
                     {playerData.position === player.position && !player.is_correct && <span>{playerData.position}</span>}

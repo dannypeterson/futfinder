@@ -10,18 +10,18 @@ const Game = ({
     playerClub,
     playerImage,
     playerNation,
-    guessList,
-    setGuessList,
+    getPlayerFromDB
 }) => {
 
 
     // game functionality
-    // const [remainingAttempts, setRemainingAttempts] = useState(3)
     const [gameOver, setGameOver] = useState(false)
     const [isCorrect, setIsCorrect] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
+    const [guessList, setGuessList] = useState([])
     const [userGuess, setUserGuess] = useState({})
-    const [currentGuess, setCurrentGuess] = useState(0)
+    const [currentGuess, setCurrentGuess] = useState(1)
+    const [alreadyGuessed, setAlreadyGuessed] = useState(false)
 
     const [revealAttribute, setRevealAttribute] = useState({
         position: false,
@@ -29,7 +29,9 @@ const Game = ({
         nation: false
     })
 
-    // UPDATE LOCAL STORAGE
+
+
+    // CHECK LOCAL STORAGE FOR CORRECT ATTRIBUTES AND GUESS NUMBER
     useEffect(() => {
         const attributesObject = window.localStorage.getItem('REVEAL_ATTRIBUTES')
         if (attributesObject) {
@@ -40,6 +42,17 @@ const Game = ({
             setCurrentGuess(JSON.parse(guessLocalStorage))
         }
     }, [])
+
+    // CHECK LOCAL STORAGE IF ANY GUESSES HAVE ALREADY BEEN MADE
+    useEffect(() => {
+        const userGuessList = window.localStorage.getItem('USER_GUESS_LIST')
+        if (playerData) {
+            if (userGuessList) {
+                setGuessList(JSON.parse(userGuessList))
+            }
+        }
+    }, [playerData])
+
 
     const updateGuessList = () => {
         let updatedUserGuess = {
@@ -89,7 +102,23 @@ const Game = ({
         }
     }
 
+    const checkGuessForDuplicate = () => {
+        if (guessList.some((guess) => guess.futdb_id == userGuess.futdb_id)) {
+            setAlreadyGuessed(true)
+            return
+        }
+    }
+
+    const handleEmptyGuess = () => {
+        if (!searchQuery.trim()) {
+            setUserGuess()
+        }
+    }
+
+
     const handleGuess = () => {
+        // checkGuessForDuplicate()
+        handleEmptyGuess()
         incrementGuess()
         updateGuessList()
         revealAttributeIfCorrect(
@@ -106,7 +135,35 @@ const Game = ({
         if (checkCorrectGuess()) {
             return
         }
+        setUserGuess({})
+        setAlreadyGuessed(false)
         setSearchQuery('')
+    }
+
+    // RESTART GAME
+    const resetGameStorage = () => {
+        const localStorageKeys = ['REVEAL_ATTRIBUTES', 'CURRENT_GUESS', 'USER_GUESS_LIST']
+        localStorageKeys.forEach((key) => { window.localStorage.removeItem(key) })
+    }
+
+    const resetState = () => {
+        setGameOver(false)
+        setIsCorrect(false)
+        setUserGuess({})
+        setGuessList([])
+        setCurrentGuess(1)
+        setRevealAttribute({
+            position: false,
+            club: false,
+            nation: false
+        })
+        setSearchQuery('')
+    }
+
+    const restartGame = () => {
+        resetGameStorage()
+        resetState()
+        getPlayerFromDB()
     }
 
     return (
@@ -128,6 +185,7 @@ const Game = ({
                 setSearchQuery={setSearchQuery}
                 handleGuess={handleGuess}
                 setUserGuess={setUserGuess}
+                alreadyGuessed={alreadyGuessed}
             />
             <Scoreboard currentGuess={currentGuess} />
             <Result
@@ -137,9 +195,8 @@ const Game = ({
                 playerClub={playerClub}
                 playerNation={playerNation}
                 revealAttribute={revealAttribute}
-                setRevealAttribute={setRevealAttribute}
             />
-            {gameOver && <GameOver playerData={playerData} guessList={guessList} />}
+            {gameOver && <GameOver playerData={playerData} guessList={guessList} restartGame={restartGame} isCorrect={isCorrect} />}
         </>
     )
 }
