@@ -22,14 +22,11 @@ const Game = ({
     const [userGuess, setUserGuess] = useState({})
     const [currentGuess, setCurrentGuess] = useState(1)
     const [alreadyGuessed, setAlreadyGuessed] = useState(false)
-
     const [revealAttribute, setRevealAttribute] = useState({
         position: false,
         club: false,
         nation: false
     })
-
-
 
     // CHECK LOCAL STORAGE FOR CORRECT ATTRIBUTES AND GUESS NUMBER
     useEffect(() => {
@@ -103,10 +100,12 @@ const Game = ({
     }
 
     const checkGuessForDuplicate = () => {
-        if (guessList.some((guess) => guess.futdb_id == userGuess.futdb_id)) {
-            setAlreadyGuessed(true)
-            return
-        }
+        guessList.forEach((_guess) => {
+            if (_guess === userGuess) {
+                setAlreadyGuessed(true)
+                return
+            }
+        })
     }
 
     const handleEmptyGuess = () => {
@@ -196,7 +195,7 @@ const Game = ({
                 playerNation={playerNation}
                 revealAttribute={revealAttribute}
             />
-            {gameOver && <GameOver playerData={playerData} guessList={guessList} restartGame={restartGame} isCorrect={isCorrect} />}
+            {gameOver && <GameOver playerData={playerData} guessList={guessList} restartGame={restartGame} isCorrect={isCorrect} currentGuess={currentGuess} />}
         </>
     )
 }

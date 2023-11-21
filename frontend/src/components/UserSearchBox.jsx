@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react"
 
 const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess, alreadyGuessed }) => {
 
-    // props:
-    // const [searchQuery, setSearchQuery] = useState('');
-    // const [userGuess, setUserGuess] = useState({})
     const [results, setResults] = useState([]);
     const [debouncedQuery, setDebouncedQuery] = useState('');
 
     // clicking on a search bar autofill
     const handleSelectPlayer = (selectedPlayer) => {
         setSearchQuery(selectedPlayer.name)
-        setUserGuess(selectedPlayer)
+        setUserGuess(selectedPlayer) // TODO move to Game ?
         setResults([]) // TODO clear search results after user selects player
     }
 
