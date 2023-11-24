@@ -7,7 +7,7 @@ from .models import Player, Nation, Club
 load_dotenv()
 
 def populate_db(player_id: int):
-    #make an HTTP request to FutDB for playerid, return dict of wanted info
+    #make an HTTP request to FutDB using the player's FutDB "id", return dict of wanted info
     api_url = f'https://futdb.app/api/players/{player_id}'
     headers = {
         'accept': 'application/json',
@@ -44,16 +44,17 @@ def get_or_create_club(futdb_club_id: int):
         headers = {
         'accept': 'application/json',
         'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))}
-    response = requests.get(api_url, headers=headers)
-    if response.status_code == 200:
-        club_data = response.json()
-        club = Club.objects.create(
-            futdb_id = futdb_club_id, name = club_data['name']
-        )
-        return club
-    else:
-        print(f"API request failed with status code: {response.status_code}")
-        return None
+        response = requests.get(api_url, headers=headers)
+        if response.status_code == 200:
+            club_data = response.json()
+            club = Club.objects.create(
+                futdb_id = futdb_club_id, name = club_data['club']['name']
+            )
+            club.save()
+            return club
+        else:
+            print(f"API request failed with status code: {response.status_code}")
+            return None
 
 
 def create_player(player_info: dict):

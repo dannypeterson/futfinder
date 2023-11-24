@@ -9,6 +9,4 @@ router.register(r'player', views.PlayerViewSet, 'player')
 urlpatterns = [
     path("", views.homepage, name="home"),
     path('', include(router.urls)),
-    path('api/search-players/', PlayerSearchView.as_view(), name='player-search')
-    # path('api/search-players/', search_box_autofill, name='search_players')
-]
+    path('api/search-players/', PlayerSearchView.as_view(), name='player-search'),]

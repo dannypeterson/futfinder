@@ -1,4 +1,13 @@
+import { useState } from "react"
+
 const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess }) => {
+
+    const [showClipboardMsg, setShowClipboardMsg] = useState(false)
+
+    const showCopiedToClipboard = () => {
+        setShowClipboardMsg(true)
+
+    }
 
     const handleShare = async () => {
         if (navigator.canShare) {
@@ -10,6 +19,10 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
         } else {
             try {
                 await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess}/5`)
+                setShowClipboardMsg(true)
+                setTimeout(() => {
+                    setShowClipboardMsg(false)
+                }, 3000)
             } catch (error) {
                 console.log(error)
             }
@@ -34,6 +47,7 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
                 ))}
             </div>
             <button className="share-game mb-3" onClick={handleShare}>Share</button>
+            {showClipboardMsg && <div className="copy-message">Copied results to clipboard</div>}
             <button onClick={restartGame}>Play again (Beta only)</button>
         </div>
     )

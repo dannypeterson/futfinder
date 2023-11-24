@@ -7,7 +7,6 @@ import os
 from .models import Player
 from .serializers import PlayerSerializer
 from random import choice
-from django.views.decorators.csrf import csrf_exempt
 import json
 from django.views import View
 
@@ -44,13 +43,3 @@ class PlayerSearchView(View):
         } for player in players]
         return JsonResponse({'players': player_names}, safe=False)
 
-# @csrf_exempt
-# def search_box_autofill(request):
-#     if request.method == 'POST':
-#         data = json.loads(request.body)
-#         search_query = data.get('search_query', '')
-
-#         results = Player.objects.filter(name__icontains=search_query)
-#         player_list = [{'pk': player.pk, 'name': player.name} for player in results]
-#         return JsonResponse({'results': player_list})
-#     return JsonResponse({'error': 'Invalid request method'}, status=400)
