@@ -6,7 +6,6 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
 
     const showCopiedToClipboard = () => {
         setShowClipboardMsg(true)
-
     }
 
     const handleShare = async () => {
@@ -26,11 +25,10 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
             } catch (error) {
                 console.log(error)
             }
-            console.log('copied to clipboard')
         }
-        console.log('button clicked')
     }
 
+    const resultsList = guessList.map((guess) => (guess.is_correct ? '✔' : '✘'))
 
     return (
         <div className="game-over-screen">
@@ -40,9 +38,9 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
                 <h3>{playerData.name}</h3>
             </div>
             <div className="go-guesses mb-3">
-                {guessList.length > 0 && guessList.reverse().map((guess) => (
-                    <span key={guess.futdb_id} style={{ 'marginRight': '1rem' }}>
-                        {guess.is_correct ? '✔' : '✘'}
+                {resultsList.length > 0 && resultsList.map((guess, index) => (
+                    <span key={index} style={{ 'marginRight': '1rem' }}>
+                        {guess}
                     </span>
                 ))}
             </div>
