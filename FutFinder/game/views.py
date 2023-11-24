@@ -15,20 +15,27 @@ load_dotenv()
 def homepage(response):
     return HttpResponse('Hello worldssdawa')
 
-def select_random_player():
-    #TODO make this more efficient with a count?
-    pk = Player.objects.values_list('pk', flat=True)
-    random_pk = choice(pk)
-    random_player = Player.objects.filter(pk=random_pk)
-    return random_player
+# def select_random_player():
+#     #TODO make this more efficient with a count?
+#     pk = Player.objects.values_list('pk', flat=True)
+#     random_pk = choice(pk)
+#     random_player = Player.objects.filter(pk=random_pk)
+#     return random_player
 
 class PlayerViewSet(viewsets.ModelViewSet):
     '''
     API endpoint to send Player data to frontend
     '''
-    queryset = select_random_player()
+    queryset = Player.objects.all()
     serializer_class = PlayerSerializer
     # permission_classes = TODO add permissions for api
+
+    def get_queryset(self):
+        # Select a random player each time the queryset is requested
+        pk = Player.objects.values_list('pk', flat=True)
+        random_pk = choice(pk)
+        random_player = Player.objects.filter(pk=random_pk)
+        return random_player
 
 class PlayerSearchView(View):
     def get(self, request, *args, **kwargs):
