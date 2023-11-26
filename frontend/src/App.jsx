@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios'
 import Game from './components/Game'
+import HowToPlay from './components/HowToPlay'
 
 function App() {
   // player data
@@ -9,6 +10,8 @@ function App() {
   const [playerImage, setPlayerImage] = useState(null)
   const [playerNation, setPlayerNation] = useState(null)
   const [playerClub, setPlayerClub] = useState(null)
+
+  const [showHowToPlay, setShowHowToPlay] = useState(true)
 
   const getPlayerFromDB = async () => {
     // TODO add information to local Storage ?
@@ -77,6 +80,7 @@ function App() {
 
   return (
     <>
+      {showHowToPlay && <HowToPlay showHowToPlay={showHowToPlay} setShowHowToPlay={setShowHowToPlay} />}
       <Game
         playerData={playerData}
         playerImage={playerImage}

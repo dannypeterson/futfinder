@@ -10,6 +10,30 @@
     }
 }
 
+/* HOW TO PLAY  */
+.how-to-play {
+	height: 485px;
+	width: 300px;
+	padding: 20px;
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 3;
+	background-color: black;
+	color: #e9cc74;
+	border-radius: 5px;
+}
+
+.how-to-play button {
+	/* color: #e9cc74; */
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	padding: 9px 14px;
+}
+
 /* SEARCH BAR  */
 .player-search-bar {
     position: relative;
@@ -59,7 +83,6 @@
     margin: 0;
     padding: 0;
 	background-color: #fff;
-    border: 1px solid #ccc;
     border-top: none;
 	border-radius: 5px;
 	overflow-y: auto;

@@ -21,7 +21,7 @@ const Game = ({
     const [guessList, setGuessList] = useState([])
     const [userGuess, setUserGuess] = useState({})
     const [currentGuess, setCurrentGuess] = useState(1)
-    const [alreadyGuessed, setAlreadyGuessed] = useState(false)
+    const [duplicatePlayer, setDuplicatePlayer] = useState(false)
     const [revealAttribute, setRevealAttribute] = useState({
         position: false,
         club: false,
@@ -100,12 +100,21 @@ const Game = ({
     }
 
     const checkGuessForDuplicate = () => {
-        guessList.forEach((_guess) => {
-            if (_guess === userGuess) {
-                setAlreadyGuessed(true)
-                return
+        if (!userGuess.futdb_id) {
+            return false // if empty guess, dont check for dupe
+        }
+        for (const _guess of guessList) {
+            if (_guess.futdb_id === userGuess.futdb_id) {
+                setDuplicatePlayer(true)
+                setTimeout(() => {
+                    setDuplicatePlayer(false)
+                }, 3000)
+                setSearchQuery('')
+                setUserGuess({})
+                return true // duplicate found, exit loop and handleGuess()
             }
-        })
+        }
+        return false // no dupe found
     }
 
     const handleEmptyGuess = () => {
@@ -116,8 +125,10 @@ const Game = ({
 
 
     const handleGuess = () => {
-        // checkGuessForDuplicate()
-        handleEmptyGuess()
+        if (checkGuessForDuplicate()) {
+            return; // if dupe is found, stop func
+        }
+        // handleEmptyGuess()
         incrementGuess()
         updateGuessList()
         revealAttributeIfCorrect(
@@ -134,8 +145,9 @@ const Game = ({
         if (checkCorrectGuess()) {
             return
         }
+        // reset guess
         setUserGuess({})
-        setAlreadyGuessed(false)
+        setDuplicatePlayer(false)
         setSearchQuery('')
     }
 
@@ -184,7 +196,7 @@ const Game = ({
                 setSearchQuery={setSearchQuery}
                 handleGuess={handleGuess}
                 setUserGuess={setUserGuess}
-                alreadyGuessed={alreadyGuessed}
+                duplicatePlayer={duplicatePlayer}
             />
             <Scoreboard currentGuess={currentGuess} />
             <Result

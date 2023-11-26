@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess, alreadyGuessed }) => {
+const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess, duplicatePlayer }) => {
 
     const [results, setResults] = useState([]);
     const [debouncedQuery, setDebouncedQuery] = useState('');
@@ -21,8 +21,8 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess,
         return () => clearTimeout(debounceTimeout);
     }, [searchQuery]);
 
+    // search results
     useEffect(() => {
-        // search results
         const fetchResults = async () => {
             try {
                 const response = await fetch(`http://127.0.0.1:8000/api/search-players/?query=${searchQuery}`);
@@ -40,25 +40,27 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess,
     }, [debouncedQuery]);
 
     return (
-        <div className="player-search-bar">
-            <input
-                type="text"
-                placeholder="Search players..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            {results.length > 0 && (
-                <ul className="suggestions-dropdown">
-                    {results.map((player, index) => (
-                        <li key={index} onClick={() => handleSelectPlayer(player)}>{player.name}</li>
-                    ))}
-                </ul>
-            )}
-            <button type="button" onClick={handleGuess}>
-                Go
-            </button>
-            {alreadyGuessed && <p className="text-warning">You have already guessed this player</p>}
-        </div>
+        <>
+            {duplicatePlayer && <p style={{ 'color': 'red', 'textAlign': 'center' }}>You have already guessed this player.</p>}
+            <div className="player-search-bar">
+                <input
+                    type="text"
+                    placeholder="Search players..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                {results.length > 0 && (
+                    <ul className="suggestions-dropdown">
+                        {results.map((player, index) => (
+                            <li key={index} onClick={() => handleSelectPlayer(player)}>{player.name}</li>
+                        ))}
+                    </ul>
+                )}
+                <button type="button" onClick={handleGuess}>
+                    Go
+                </button>
+            </div>
+        </>
     );
 }
 
