@@ -8,16 +8,19 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
         setShowClipboardMsg(true)
     }
 
+    const resultsList = guessList.map((guess) => (guess.is_correct ? '✔' : '✘'))
+
+
     const handleShare = async () => {
         if (navigator.canShare) {
             try {
-                await navigator.share({ title: `Futfinder #1 ${currentGuess}/5`, text: `test` })
+                await navigator.share({ title: 'Futfinder', text: `Futfinder #1 ${currentGuess - 1}/5 ${resultsList}` })
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess}/5`)
+                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess - 1}/5 ${resultsList}`)
                 setShowClipboardMsg(true)
                 setTimeout(() => {
                     setShowClipboardMsg(false)
@@ -28,7 +31,6 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
         }
     }
 
-    const resultsList = guessList.map((guess) => (guess.is_correct ? '✔' : '✘'))
 
     return (
         <div className="game-over-screen">

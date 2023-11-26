@@ -80,6 +80,7 @@ function App() {
 
   return (
     <>
+      <h2 className='title'>FUTFINDER</h2>
       {showHowToPlay && <HowToPlay showHowToPlay={showHowToPlay} setShowHowToPlay={setShowHowToPlay} />}
       <Game
         playerData={playerData}

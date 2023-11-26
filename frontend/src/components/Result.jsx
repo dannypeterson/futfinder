@@ -10,7 +10,7 @@ const Result = ({ playerData, userGuess, guessList, playerClub, playerNation, re
                     {playerData.position === player.position && !player.is_correct && <span>{playerData.position}</span>}
                     {revealAttribute && playerData.club.futdb_id === player.club && !player.is_correct && <img style={{ 'width': '2rem', 'height': '2rem' }} src={playerClub} alt="club" />}
                     {playerData.nationality.futdb_id === player.nation && !player.is_correct && <img src={playerNation} style={{ 'width': '2rem', 'height': '2rem' }} alt="nation" />}
-                    {!player.is_correct && playerData.position !== player.position && playerData.club.futdb_id !== player.club && playerData.nationality.futdb_id !== player.nation && <span style={{ 'textAlign': 'end' }}>❌</span>}
+                    {!player.is_correct && playerData.position !== player.position && playerData.club.futdb_id !== player.club && playerData.nationality.futdb_id !== player.nation && <span>❌</span>}
                 </li>
             ))}
         </ul>
