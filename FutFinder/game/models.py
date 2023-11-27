@@ -5,7 +5,6 @@ import os
 
 class User(models.Model):
     username = models.CharField(max_length=50, unique=True)
-    strikes = models.SmallIntegerField(default=0)
 
     def __str__(self) -> str:
         return self.username
@@ -16,13 +15,6 @@ class Club(models.Model):
 
     def __str__(self) -> str:
         return self.name
-
-    def get_futdb_image(self, id):
-        api_url = f'https://futdb.app/api/clubs/{id}/image'
-        headers = {
-        'accept': 'image/png',
-        'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))}
-        response = requests.get(api_url, headers=headers)
 
 class Nation(models.Model):
     futdb_id = models.IntegerField(unique=True)
@@ -54,12 +46,3 @@ class Player(models.Model):
         today = date.today()
         age = today.year - self.dob.year
         return age
-
-class Guess(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    is_correct = models.BooleanField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'Guess by {self.user.username} on {self.player.name} is {self.is_correct}!'

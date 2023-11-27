@@ -1,27 +1,67 @@
 import React, { useEffect, useState } from "react"
 
-const UserSearchBox = ({inputValue}) => {
-    const [inputName, setInputName] = useState("");
+const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess, duplicatePlayer }) => {
 
-    const handleInputName = (event) => {
-        setInputName(event.target.value);
-    };
+    const [results, setResults] = useState([]);
+    const [debouncedQuery, setDebouncedQuery] = useState('');
 
-    // const checkUserGuess = (input) => {
-    //     if (input != playerData.name) {
-    //         // increment strikes: POST request
+    // clicking on a search bar autofill
+    const handleSelectPlayer = (selectedPlayer) => {
+        setSearchQuery(selectedPlayer.name)
+        setUserGuess(selectedPlayer) // TODO move to Game ?
+        setResults([]) // TODO clear search results after user selects player
+    }
 
-    //     } else {
-    //         // correct checkUserGuess, reveal name and photo, update user points?
-    //     }
-    // }
+    // debouncing query
+    useEffect(() => {
+        const debounceTimeout = setTimeout(() => {
+            setDebouncedQuery(searchQuery);
+        }, 400);
 
-    return(
-        <form className="user-input">
-            <input type="text" placeholder="Enter a player's name here" value={inputValue} onChange={handleInputName}/>
-            <button type="button">Enter</button>
-        </form>
-    )
+        return () => clearTimeout(debounceTimeout);
+    }, [searchQuery]);
+
+    // search results
+    useEffect(() => {
+        const fetchResults = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/search-players/?query=${searchQuery}`);
+                const data = await response.json();
+                setResults(data.players);
+            } catch (error) {
+                console.error('Error fetching player search results:', error);
+            }
+        };
+        if (debouncedQuery.trim() !== '') {
+            fetchResults();
+        } else {
+            setResults([]);
+        }
+    }, [debouncedQuery]);
+
+    return (
+        <>
+            {duplicatePlayer && <p style={{ 'color': 'red', 'textAlign': 'center' }}>You have already guessed this player.</p>}
+            <div className="player-search-bar">
+                <input
+                    type="text"
+                    placeholder="Search players..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                {results.length > 0 && (
+                    <ul className="suggestions-dropdown">
+                        {results.map((player, index) => (
+                            <li key={index} onClick={() => handleSelectPlayer(player)}>{player.name}</li>
+                        ))}
+                    </ul>
+                )}
+                <button type="button" onClick={handleGuess}>
+                    Go
+                </button>
+            </div>
+        </>
+    );
 }
 
 export default UserSearchBox

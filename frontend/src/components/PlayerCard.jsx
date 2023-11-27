@@ -1,10 +1,4 @@
-import { useEffect, useState } from 'react'
-import fifaCard from '../assets/fifa-card.png'
-import axios from 'axios'
-import App from '../App'
-
-const PlayerCard = ({ remainingAttempts, playerData, playerImage, gameOver }) => {
-  playerImage = 'https://selimdoyranli.com/cdn/fut-player-card/img/messi.png'
+const PlayerCard = ({ playerData, playerImage, playerClub, playerNation, gameOver, isCorrect, revealAttribute }) => {
 
   return (
     <>
@@ -15,30 +9,28 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, gameOver }) =>
               <span>{playerData.rating}</span>
             </div>
             <div className="player-position">
-              {remainingAttempts <= 2 ? (
-                <span>{playerData.position}</span>
-              ) : (
-                <span>?</span>
-              )}
+              {revealAttribute.position || gameOver || isCorrect ? (
+                <span className='reveal-position'>{playerData.position}</span>
+              ) : <span style={{ 'opacity': 0 }}>POS</span>}
             </div>
             <div className="player-nation">
-              {remainingAttempts <= 1 ? (
-                <img
-                  src={playerData.nationality}
+              {revealAttribute.nation || gameOver || isCorrect ? (
+                <img className='reveal-nation'
+                  src={playerNation}
                   alt="nation"
                   draggable="false"
                 />
               ) : null}
             </div>
             <div className="player-club">
-              {remainingAttempts == 0 ? (
-                <img src={playerData.club} alt="club" draggable="false" />
+              {revealAttribute.club || gameOver || isCorrect ? (
+                <img src={playerClub} alt="club" draggable="false" className='reveal-club' />
               ) : null}
             </div>
           </div>
           <div className="player-picture">
-            {gameOver ? (
-              <img src={playerImage} alt="player img" draggable="false" />
+            {gameOver || isCorrect ? (
+              <img src={playerImage} alt="player img" draggable="false" className='reveal-player' />
             ) : (
               <img src={playerImage} style={{ filter: 'brightness(0)' }} alt="silouette" draggable="false" />
             )}
@@ -48,7 +40,7 @@ const PlayerCard = ({ remainingAttempts, playerData, playerImage, gameOver }) =>
           <div className="player-info">
             <div className="player-name">
               {gameOver ? (
-                <span>{playerData.name}</span>
+                <span className='reveal-name'>{playerData.name}</span>
               ) : (
                 <span style={{ opacity: 0 }}>UNKNOWN PLAYER</span>
               )}
