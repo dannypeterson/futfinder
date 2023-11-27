@@ -25,7 +25,7 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess,
     useEffect(() => {
         const fetchResults = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/search-players/?query=${searchQuery}`);
+                const response = await fetch(`http://127.0.0.1:8000/search-players/?query=${searchQuery}`);
                 const data = await response.json();
                 setResults(data.players);
             } catch (error) {
