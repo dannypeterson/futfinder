@@ -68,13 +68,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
-
 DATABASES = {
-    "default": dj_database_url.config(
-        conn_max_age=600,
-        conn_health_checks=True,
-        ssl_require=True,
-    ),
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
 
 # DATABASES = {
@@ -88,11 +85,6 @@ DATABASES = {
 #     }
 # }
 
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=config('DATABASE_URL')
-#     )
-# }
 
 
 # Password validation
