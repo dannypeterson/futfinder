@@ -13,7 +13,8 @@ function App() {
 
   const [showHowToPlay, setShowHowToPlay] = useState(true)
 
-  axios.defaults.baseURL = 'http://localhost:8000/api/';
+  // axios.defaults.baseURL = 'http://localhost:8000/api/';
+  axios.defaults.baseURL = 'https://futfinder-d2b9385f217b.herokuapp.com/api/';
 
 
   const getPlayerFromDB = async () => {
