@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 import django_heroku
-import dj_database_urls
+import dj_database_url
 from decouple import config
 
 
@@ -74,6 +74,12 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=config('DATABASE_URL')
+#     )
+# }
 
 
 # Password validation
