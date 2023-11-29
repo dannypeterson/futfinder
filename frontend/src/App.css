@@ -12,18 +12,22 @@
 
 /* HOW TO PLAY  */
 .how-to-play {
-	height: 485px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	height: 500px;
 	width: 300px;
 	padding: 20px;
-	position: fixed;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	z-index: 3;
+	z-index: 100;
 	background-color: black;
 	color: #e9cc74;
 	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .how-to-play button {
@@ -36,10 +40,10 @@
 
 /* TITLE  */
 .title {
-	position: absolute;
-	top: 5%;
-	transform: translateX(50%);
+	width: 100%;
+	text-align: center;
 	color: #e9cc74;
+	/* margin-left: 2px; */
 }
 
 /* SEARCH BAR  */
