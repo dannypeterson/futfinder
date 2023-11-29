@@ -14,13 +14,13 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
     const handleShare = async () => {
         if (navigator.canShare) {
             try {
-                await navigator.share({ title: 'Futfinder', text: `Futfinder #1 ${currentGuess - 1}/5 ${resultsList}` })
+                await navigator.share({ title: 'Futfinder', text: `Futfinder #1 ${currentGuess - 1}/5 \n ${resultsList}` })
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess - 1}/5 ${resultsList}`)
+                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess - 1}/5 \n ${resultsList}`)
                 setShowClipboardMsg(true)
                 setTimeout(() => {
                     setShowClipboardMsg(false)

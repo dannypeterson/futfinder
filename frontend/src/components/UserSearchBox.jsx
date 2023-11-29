@@ -12,6 +12,8 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess,
         setResults([]) // TODO clear search results after user selects player
     }
 
+    const baseURL = import.meta.env.VITE_BASE_URL
+
     // debouncing query
     useEffect(() => {
         const debounceTimeout = setTimeout(() => {
@@ -25,8 +27,7 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess,
     useEffect(() => {
         const fetchResults = async () => {
             try {
-                // const response = await fetch(`http://127.0.0.1:8000/search-players/?query=${searchQuery}`);
-                const response = await fetch(`https://futfinder-d2b9385f217b.herokuapp.com/search-players/?query=${searchQuery}`);
+                const response = await fetch(`${baseURL}/search-players/?query=${searchQuery}`);
                 const data = await response.json();
                 setResults(data.players);
             } catch (error) {

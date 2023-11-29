@@ -191,6 +191,7 @@ const Game = ({
                     revealAttribute={revealAttribute}
                 />
             )}
+            <Scoreboard currentGuess={currentGuess} />
             <UserSearchBox
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
@@ -198,7 +199,6 @@ const Game = ({
                 setUserGuess={setUserGuess}
                 duplicatePlayer={duplicatePlayer}
             />
-            <Scoreboard currentGuess={currentGuess} />
             <Result
                 playerData={playerData}
                 userGuess={userGuess}

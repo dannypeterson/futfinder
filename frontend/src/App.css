@@ -16,7 +16,7 @@
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	height: 500px;
+	height: 39rem;
 	width: 300px;
 	padding: 20px;
 	display: flex;
@@ -28,14 +28,18 @@
 	color: #e9cc74;
 	border-radius: 5px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	opacity: 95%;
 }
 
-.how-to-play button {
-	/* color: #e9cc74; */
+.close-modal {
 	position: absolute;
 	top: 0.75rem;
 	right: 0.75rem;
 	padding: 9px 14px;
+}
+
+.lets-play {
+	margin-top: 3px;
 }
 
 /* TITLE  */
@@ -43,7 +47,6 @@
 	width: 100%;
 	text-align: center;
 	color: #e9cc74;
-	/* margin-left: 2px; */
 }
 
 /* SEARCH BAR  */
@@ -51,7 +54,7 @@
     position: relative;
 	display: flex;
 	justify-content: center;
-	margin-top: 2rem;
+	margin-top: 0.5rem;
 }
 
 .player-search-bar input {

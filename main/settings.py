@@ -11,8 +11,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
-IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
-
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ['*']
@@ -33,7 +31,7 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'https://futfinder.vercel.app/']
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'https://futfinder.vercel.app']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,22 +66,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'futfinder_db',
-#         'USER': 'dannypeterson',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=config('DATABASE_URL')
+        )
+    }
+else :
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'futfinder_db',
+            'USER': 'dannypeterson',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 
 

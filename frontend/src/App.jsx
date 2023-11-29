@@ -13,15 +13,17 @@ function App() {
 
   const [showHowToPlay, setShowHowToPlay] = useState(true)
 
-  // axios.defaults.baseURL = 'http://localhost:8000/api/';
-  axios.defaults.baseURL = 'https://futfinder-d2b9385f217b.herokuapp.com/api/';
+  // axios.defaults.baseURL = 'http://localhost:8000/';
+  // axios.defaults.baseURL = 'https://futfinder-d2b9385f217b.herokuapp.com/';
+
+  const baseURL = import.meta.env.VITE_BASE_URL
 
 
   const getPlayerFromDB = async () => {
     // this func should only run once every 24hr, so need to cache it and check cache before running this func
     try {
       // player data
-      const response = await axios.get(`/player/`)
+      const response = await axios.get(`${baseURL}/api/player/`)
       setPlayerData(response.data[0])
       const futdbID = response.data[0].futdb_id
       const nationID = response.data[0].nationality.futdb_id

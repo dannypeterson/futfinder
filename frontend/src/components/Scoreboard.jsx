@@ -1,10 +1,14 @@
-const Scoreboard = ({ remainingAttempts, currentGuess, }) => {
+const Scoreboard = ({ currentGuess, }) => {
 
-    const remaining_attempts = 5 - currentGuess
+    const remainingAttempts = 5 - currentGuess
+
+    const attemptsArray = Array.from({ length: remainingAttempts }, (_, index) => (
+        <span key={index}>⚽</span>
+    ));
 
     return (
         <>
-            <p>Attempts remaining: {remaining_attempts}</p>
+            <p style={{ 'color': '#e9cc74', 'fontWeight': 'bold' }}>Attempts remaining: {attemptsArray}</p>
         </>
     )
 }
