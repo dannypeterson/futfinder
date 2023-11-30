@@ -9,18 +9,19 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
     }
 
     const resultsList = guessList.map((guess) => (guess.is_correct ? '✔' : '✘'))
+    const shareResults = guessList.map((guess) => (guess.is_correct ? '✅' : '❌'))
 
 
     const handleShare = async () => {
         if (navigator.canShare) {
             try {
-                await navigator.share({ title: 'Futfinder', text: `Futfinder #1 ${currentGuess - 1}/5 \n ${resultsList}` })
+                await navigator.share({ title: 'Futfinder', text: `Futfinder #1 ${currentGuess - 1}/5 \n ${resultsList} \n https://futfinder.vercel.app/` })
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess - 1}/5 \n ${resultsList}`)
+                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess - 1}/5 \n ${resultsList} \n https://futfinder.vercel.app/`)
                 setShowClipboardMsg(true)
                 setTimeout(() => {
                     setShowClipboardMsg(false)
