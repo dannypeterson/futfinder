@@ -1,6 +1,6 @@
 const Scoreboard = ({ currentGuess, }) => {
 
-    const remainingAttempts = 5 - currentGuess
+    const remainingAttempts = 6 - currentGuess
 
     const attemptsArray = Array.from({ length: remainingAttempts }, (_, index) => (
         <span key={index}>⚽</span>

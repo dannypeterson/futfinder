@@ -94,7 +94,7 @@ const Game = ({
             window.localStorage.setItem('CURRENT_GUESS', JSON.stringify(updatedGuess))
             return updatedGuess
         })
-        if (currentGuess >= 5) {
+        if (currentGuess >= 6) {
             setGameOver(true)
         }
     }
