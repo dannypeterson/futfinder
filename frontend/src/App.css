@@ -177,7 +177,7 @@ body {
 
 
 body:after {
-	content: '@selimdoyranli';
+	/* content: '@selimdoyranli'; */
 	font-size: 1rem;
 	color: #aaa;
 	position: fixed;
