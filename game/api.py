@@ -6,34 +6,37 @@ from .models import Player, Nation, Club
 
 load_dotenv()
 
-def populate_db(player_id: int):
-    #make an HTTP request to FutDB using the player's FutDB "id", return dict of wanted info
-    api_url = f'https://futdb.app/api/players/{player_id}'
-    headers = {
-        'accept': 'application/json',
-        'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))}
-    response = requests.get(api_url, headers=headers)
-    if response.status_code == 200:
-            player_data = response.json()
-            player_data = player_data.get('player', '')
-            player_info = {
-                'futdb_id': player_data.get('id', 0),
-                'name': player_data.get('name', ''),
-                'dob': player_data.get('birthDate', ''),
-                'nation_id': player_data.get('nation', ''),
-                'club_id': player_data.get('club', ''),
-                'position': player_data.get('position', ''),
-                'rating': player_data.get('rating', 0),
-                'pace': player_data.get('pace', 0),
-                'shooting': player_data.get('shooting', 0),
-                'passing': player_data.get('passing', 0),
-                'dribbling': player_data.get('dribbling', 0),
-                'defending': player_data.get('defending', 0),
-                'physicality': player_data.get('physicality', 0),
-            }
-            return player_info
-    else:
-        print(f"API request failed with status code {response.status_code}")
+def populate_db(player_id_list: list):
+    #make an HTTP request to FutDB using the player's FutDB "id", return list of dicts of wanted info
+    team_players = []
+    for player_id in player_id_list:
+        api_url = f'https://futdb.app/api/players/{player_id}'
+        headers = {
+            'accept': 'application/json',
+            'X-AUTH-TOKEN': str(os.getenv('FUTDB_API_KEY'))}
+        response = requests.get(api_url, headers=headers)
+        if response.status_code == 200:
+                player_data = response.json().get('player', '')
+                player_info = {
+                    'futdb_id': player_data.get('id', 0),
+                    'name': player_data.get('name', ''),
+                    'dob': player_data.get('birthDate', ''),
+                    'nation_id': player_data.get('nation', ''),
+                    'club_id': player_data.get('club', ''),
+                    'position': player_data.get('position', ''),
+                    'rating': player_data.get('rating', 0),
+                    'pace': player_data.get('pace', 0),
+                    'shooting': player_data.get('shooting', 0),
+                    'passing': player_data.get('passing', 0),
+                    'dribbling': player_data.get('dribbling', 0),
+                    'defending': player_data.get('defending', 0),
+                    'physicality': player_data.get('physicality', 0),
+                }
+                team_players.append(player_info)
+                print(f"Player ID: {player_id}, Player Info: {player_info}")
+        else:
+            print(f"API request failed with status code {response.status_code}")
+    return team_players
 
 def get_or_create_club(futdb_club_id: int):
     try:
@@ -57,25 +60,26 @@ def get_or_create_club(futdb_club_id: int):
             return None
 
 
-def create_player(player_info: dict):
+def create_players(team_list: list):
     # create Player model instance from dictionary, use populate_db(futdb id)
-    new_player = Player(
-        futdb_id = player_info['futdb_id'],
-        name = player_info['name'],
-        dob = player_info['dob'],
-        position = player_info['position'],
-        rating = player_info['rating'],
-        pace = player_info['pace'],
-        shooting = player_info['shooting'],
-        passing = player_info['passing'],
-        dribbling = player_info['dribbling'],
-        defending = player_info['defending'],
-        physicality = player_info['physicality'],
-        nationality = Nation.objects.get(futdb_id=player_info['nation_id']),
-        club = get_or_create_club(player_info['club_id'])
-    )
-    new_player.save()
-    print("Player created")
+    for player_info in team_list:
+        new_player = Player(
+            futdb_id = player_info['futdb_id'],
+            name = player_info['name'],
+            dob = player_info['dob'],
+            position = player_info['position'],
+            rating = player_info['rating'],
+            pace = player_info['pace'],
+            shooting = player_info['shooting'],
+            passing = player_info['passing'],
+            dribbling = player_info['dribbling'],
+            defending = player_info['defending'],
+            physicality = player_info['physicality'],
+            nationality = Nation.objects.get(futdb_id=player_info['nation_id']),
+            club = get_or_create_club(player_info['club_id'])
+        )
+        new_player.save()
+        print(f"Player {new_player.name} created")
 
 def get_nations(page):
     # add futDB nations to db based on page
@@ -112,3 +116,5 @@ def get_player_image(player_id):
     response = requests.get(api_url, headers=headers)
     if response.status_code == 200:
         print(response)
+
+liverpool = [23, 18535, 514, 18565, 677, 96, 631, 18799, 434, 391, 168, 404, 265, 140]
