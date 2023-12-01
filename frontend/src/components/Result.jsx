@@ -5,7 +5,7 @@ const Result = ({ playerData, userGuess, guessList, playerClub, playerNation, re
     return (
         <ul className="guesses-list">
             {guessList.length > 0 && [...guessList].reverse().map((player, idx) => (
-                <li key={idx}>{player.name}
+                <li key={idx} style={{ 'color': 'red' }}>{player.name}
                     {player.is_correct && <span>✔️</span>}
                     {playerData.position === player.position && !player.is_correct && <span>{playerData.position}</span>}
                     {revealAttribute && playerData.club.futdb_id === player.club && !player.is_correct && <img style={{ 'width': '2rem', 'height': '2rem' }} src={playerClub} alt="club" />}

@@ -9,7 +9,7 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
     }
 
     const resultsList = guessList.map((guess) => (guess.is_correct ? '✔' : '✘'))
-    const shareResults = guessList.map((guess) => (guess.is_correct ? '✅' : '❌'))
+    const shareResults = guessList.map((guess) => (guess.is_correct ? '✅' : '❌')).join('')
 
 
     const handleShare = async () => {

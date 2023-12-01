@@ -10,6 +10,26 @@
     }
 }
 
+body {
+	font-family: 'Saira Semi Condensed', sans-serif;
+	font-weight: 400;
+	position: relative;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+	min-height: 700px;
+	background: url("https://i.pinimg.com/originals/19/1b/6d/191b6d669f008bfaf3950dd3e71ec2ca.jpg") no-repeat center center/cover;
+	padding-bottom: 100px;
+}
+
 /* HOW TO PLAY  */
 .how-to-play {
 	position: fixed;
@@ -154,25 +174,7 @@
 	box-sizing: border-box;
 }
 
-body {
-	font-family: 'Saira Semi Condensed', sans-serif;
-	font-weight: 400;
-	position: relative;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	align-items: center;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-	width: 100%;
-	height: 100vh;
-	min-height: 700px;
-	/* background: url("https://media.playstation.com/is/image/SCEA/fifa-19-stadium-background-blur-01-ps4-us-08jun18?$native_nt$") no-repeat center center/cover; */
-	background: url("https://i.pinimg.com/originals/19/1b/6d/191b6d669f008bfaf3950dd3e71ec2ca.jpg") no-repeat center center/cover;
-}
+
 
 body:after {
 	content: '@selimdoyranli';
@@ -202,6 +204,7 @@ body:after {
 	-webkit-transition: 200ms ease-in;
 	-o-transition: 200ms ease-in;
 	transition: 200ms ease-in;
+	top: 10%;
 }
 
 .fut-player-card .player-card-top {

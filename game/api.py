@@ -33,7 +33,6 @@ def populate_db(player_id_list: list):
                     'physicality': player_data.get('physicality', 0),
                 }
                 team_players.append(player_info)
-                print(f"Player ID: {player_id}, Player Info: {player_info}")
         else:
             print(f"API request failed with status code {response.status_code}")
     return team_players
@@ -117,4 +116,6 @@ def get_player_image(player_id):
     if response.status_code == 200:
         print(response)
 
-liverpool = [23, 18535, 514, 18565, 677, 96, 631, 18799, 434, 391, 168, 404, 265, 140]
+liverpool = [23, 18535, 514, 18565, 677, 96, 631, 18799, 434, 391, 168, 404, 265, 140, 18521]
+west_ham = [819, 987, 1035, 1228, 1454, 866, 459, 950, 995, 18694, 1007]
+man_u = []

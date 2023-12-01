@@ -28,27 +28,27 @@ const Game = ({
         nation: false
     })
 
-    // CHECK LOCAL STORAGE FOR CORRECT ATTRIBUTES AND GUESS NUMBER
-    useEffect(() => {
-        const attributesObject = window.localStorage.getItem('REVEAL_ATTRIBUTES')
-        if (attributesObject) {
-            setRevealAttribute(JSON.parse(attributesObject))
-        }
-        const guessLocalStorage = window.localStorage.getItem('CURRENT_GUESS')
-        if (guessLocalStorage) {
-            setCurrentGuess(JSON.parse(guessLocalStorage))
-        }
-    }, [])
+    // // CHECK LOCAL STORAGE FOR CORRECT ATTRIBUTES AND GUESS NUMBER
+    // useEffect(() => {
+    //     const attributesObject = window.localStorage.getItem('REVEAL_ATTRIBUTES')
+    //     if (attributesObject) {
+    //         setRevealAttribute(JSON.parse(attributesObject))
+    //     }
+    //     const guessLocalStorage = window.localStorage.getItem('CURRENT_GUESS')
+    //     if (guessLocalStorage) {
+    //         setCurrentGuess(JSON.parse(guessLocalStorage))
+    //     }
+    // }, [])
 
-    // CHECK LOCAL STORAGE IF ANY GUESSES HAVE ALREADY BEEN MADE
-    useEffect(() => {
-        const userGuessList = window.localStorage.getItem('USER_GUESS_LIST')
-        if (playerData) {
-            if (userGuessList) {
-                setGuessList(JSON.parse(userGuessList))
-            }
-        }
-    }, [playerData])
+    // // CHECK LOCAL STORAGE IF ANY GUESSES HAVE ALREADY BEEN MADE
+    // useEffect(() => {
+    //     const userGuessList = window.localStorage.getItem('USER_GUESS_LIST')
+    //     if (playerData) {
+    //         if (userGuessList) {
+    //             setGuessList(JSON.parse(userGuessList))
+    //         }
+    //     }
+    // }, [playerData])
 
 
     const updateGuessList = () => {
