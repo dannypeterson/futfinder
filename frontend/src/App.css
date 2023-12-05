@@ -30,6 +30,12 @@ body {
 	padding-bottom: 100px;
 }
 
+/* SPINNER  */
+.spinner-container {
+	display: flex;
+	justify-content: center;
+}
+
 /* HOW TO PLAY  */
 .how-to-play {
 	position: fixed;

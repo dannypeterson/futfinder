@@ -3,6 +3,7 @@ import './App.css'
 import axios from 'axios'
 import Game from './components/Game'
 import HowToPlay from './components/HowToPlay'
+import Spinner from './components/Spinner'
 
 function App() {
   // player data
@@ -55,17 +56,21 @@ function App() {
   }, [])
 
 
+
+
   return (
     <>
       <h2 className='title'>FUTFINDER</h2>
       {showHowToPlay && <HowToPlay showHowToPlay={showHowToPlay} setShowHowToPlay={setShowHowToPlay} />}
-      <Game
-        playerData={playerData}
-        playerImage={playerImage}
-        playerClub={playerClub}
-        playerNation={playerNation}
-        getPlayerFromDB={getPlayerFromDB}
-      />
+      {loading ? <Spinner /> :
+        <Game
+          playerData={playerData}
+          playerImage={playerImage}
+          playerClub={playerClub}
+          playerNation={playerNation}
+          getPlayerFromDB={getPlayerFromDB}
+        />
+      }
     </>
   )
 }
