@@ -1,12 +1,11 @@
-from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-import requests
 from dotenv import load_dotenv
 from rest_framework import viewsets, permissions
 from .models import Player
 from .serializers import PlayerSerializer
 from random import choice
 from django.views import View
+from django.core.cache import cache
 
 load_dotenv()
 
@@ -22,10 +21,16 @@ class PlayerViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAdminUser]
 
     def get_queryset(self):
-        # Select a random player each time the queryset is requested
+        # Check cache for qs
+        cached_data = cache.get('random_player_data')
+        if cached_data:
+            return cached_data
+
+        # If not found, Select a random player
         pk = Player.objects.values_list('pk', flat=True)
         random_pk = choice(pk)
         random_player = Player.objects.filter(pk=random_pk)
+        cache.set('random_player_data', random_player, timeout = 60 * 60)
         return random_player
 
 class PlayerSearchView(View):

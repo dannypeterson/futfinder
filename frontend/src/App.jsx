@@ -31,7 +31,7 @@ function App() {
 
 
   const getPlayerFromDB = async () => {
-    // this func should only run once every 24hr, so need to cache it and check cache before running this func
+
     try {
       setLoading(true)
       const response = await axios.get(`${baseURL}/api/player/`)
