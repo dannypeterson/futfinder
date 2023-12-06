@@ -4,6 +4,7 @@ import Scoreboard from './Scoreboard'
 import Result from './Result'
 import { useEffect, useState } from 'react'
 import GameOver from './GameOver'
+import NUMBER_OF_GUESSES from '../axios.config'
 
 const Game = ({
     playerData,
@@ -94,7 +95,7 @@ const Game = ({
             window.localStorage.setItem('CURRENT_GUESS', JSON.stringify(updatedGuess))
             return updatedGuess
         })
-        if (currentGuess >= 6) {
+        if (currentGuess >= NUMBER_OF_GUESSES) {
             setGameOver(true)
         }
     }

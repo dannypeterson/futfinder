@@ -1,4 +1,5 @@
 import { useState } from "react"
+import NUMBER_OF_GUESSES from "../axios.config"
 
 const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess }) => {
 
@@ -15,13 +16,13 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
     const handleShare = async () => {
         if (navigator.canShare) {
             try {
-                await navigator.share({ title: 'Futfinder', text: `Futfinder #1 ${currentGuess - 1}/6 \n ${shareResults} \n https://futfinder.vercel.app/` })
+                await navigator.share({ title: 'Futfinder', text: `Futfinder #1 ${currentGuess - 1}/${NUMBER_OF_GUESSES} \n ${shareResults} \n https://futfinder.vercel.app/` })
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess - 1}/6 \n ${shareResults} \n https://futfinder.vercel.app/`)
+                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess - 1}/${NUMBER_OF_GUESSES} \n ${shareResults} \n https://futfinder.vercel.app/`)
                 setShowClipboardMsg(true)
                 setTimeout(() => {
                     setShowClipboardMsg(false)
