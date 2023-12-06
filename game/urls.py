@@ -4,9 +4,10 @@ from rest_framework import routers
 from .views import PlayerSearchView
 
 router = routers.DefaultRouter()
-router.register(r'player', views.PlayerViewSet, 'player')
+router.register(r"player", views.PlayerViewSet, "player")
 
 urlpatterns = [
     path("", views.homepage, name="home"),
-    path('api/', include(router.urls), name='api'),
-    path('search-players/', PlayerSearchView.as_view(), name='player-search'),]
+    path("api/", include(router.urls), name="api"),
+    path("search-players/", PlayerSearchView.as_view(), name="player-search"),
+]
