@@ -6,6 +6,7 @@ from .serializers import PlayerSerializer
 from random import choice
 from django.views import View
 from django.core.cache import cache
+from .management.commands.get_random_player import schedule_player
 
 load_dotenv()
 
@@ -24,16 +25,14 @@ class PlayerViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAdminUser]
 
     def get_queryset(self):
-        # Check cache for qs
-        cached_data = cache.get("random_player_data")
-        if cached_data:
-            return cached_data
+        # return scheduled player from cache
+        scheduled_player = cache.get("scheduled_player")
+        if scheduled_player:
+            return scheduled_player
 
-        # If not found, Select a random player
         pk = Player.objects.values_list("pk", flat=True)
         random_pk = choice(pk)
         random_player = Player.objects.filter(pk=random_pk)
-        cache.set("random_player_data", random_player, timeout=60 * 60 * 24) #cache for 24 hours
         return random_player
 
 

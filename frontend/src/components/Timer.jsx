@@ -35,8 +35,8 @@ const Timer = () => {
 
     return (
         <div>
-            <strong>{countdown}</strong>
-            <p>Until next FutFinder</p>
+            <h3>{countdown}</h3>
+            <p>until next FutFinder</p>
         </div>
     );
 };

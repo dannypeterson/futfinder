@@ -173,6 +173,7 @@ const Game = ({
     }
 
     const restartGame = () => {
+        // beta feature onplay, may be added in for premium versions
         resetGameStorage()
         resetState()
         getPlayerFromDB()
