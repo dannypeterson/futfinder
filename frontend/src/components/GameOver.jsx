@@ -1,5 +1,6 @@
 import { useState } from "react"
 import NUMBER_OF_GUESSES from "../axios.config"
+import Timer from "./Timer"
 
 const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess }) => {
 
@@ -51,6 +52,7 @@ const GameOver = ({ playerData, guessList, restartGame, isCorrect, currentGuess 
             <button className="share-game mb-3" onClick={handleShare}>Share</button>
             {showClipboardMsg && <div className="copy-message">Copied results to clipboard</div>}
             <button onClick={restartGame}>Play again (Beta only)</button>
+            <Timer />
         </div>
     )
 }

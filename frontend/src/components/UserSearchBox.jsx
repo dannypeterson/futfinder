@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { searchPlayers } from "../api";
 
 const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess, duplicatePlayer }) => {
 
@@ -9,17 +10,13 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess,
     const handleSelectPlayer = (selectedPlayer) => {
         setSearchQuery(selectedPlayer.name)
         setUserGuess(selectedPlayer) // TODO move to Game ?
-        setResults([]) // TODO clear search results after user selects player
     }
-
-    const baseURL = import.meta.env.VITE_BASE_URL
 
     // debouncing query
     useEffect(() => {
         const debounceTimeout = setTimeout(() => {
             setDebouncedQuery(searchQuery);
         }, 400);
-
         return () => clearTimeout(debounceTimeout);
     }, [searchQuery]);
 
@@ -27,18 +24,17 @@ const UserSearchBox = ({ searchQuery, setSearchQuery, handleGuess, setUserGuess,
     useEffect(() => {
         const fetchResults = async () => {
             try {
-                const response = await fetch(`${baseURL}/search-players/?query=${searchQuery}`);
-                const data = await response.json();
-                setResults(data.players);
+                if (debouncedQuery.trim() !== '') {
+                    const fetchedResults = await searchPlayers(debouncedQuery);
+                    setResults(fetchedResults);
+                } else {
+                    setResults([]);
+                }
             } catch (error) {
                 console.error('Error fetching player search results:', error);
             }
         };
-        if (debouncedQuery.trim() !== '') {
-            fetchResults();
-        } else {
-            setResults([]);
-        }
+        fetchResults();
     }, [debouncedQuery]);
 
     return (

@@ -16,7 +16,7 @@ def homepage(response):
 
 class PlayerViewSet(viewsets.ModelViewSet):
     """
-    API endpoint to send Player data to frontend
+    Get random player HTTP response
     """
 
     queryset = Player.objects.all()
@@ -34,6 +34,7 @@ class PlayerViewSet(viewsets.ModelViewSet):
         random_pk = choice(pk)
         random_player = Player.objects.filter(pk=random_pk)
         cache.set("random_player_data", random_player, timeout=60 * 60)
+        print('got random player')
         return random_player
 
 
@@ -41,7 +42,7 @@ class PlayerSearchView(View):
     def get(self, request, *args, **kwargs):
         query = request.GET.get("query", "")
         players = Player.objects.filter(name__icontains=query)
-        player_names = [
+        player_info = [
             {
                 "futdb_id": player.futdb_id,
                 "name": player.name,
@@ -51,4 +52,4 @@ class PlayerSearchView(View):
             }
             for player in players
         ]
-        return JsonResponse({"players": player_names}, safe=False)
+        return JsonResponse({"players": player_info}, safe=False)
