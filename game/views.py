@@ -33,8 +33,7 @@ class PlayerViewSet(viewsets.ModelViewSet):
         pk = Player.objects.values_list("pk", flat=True)
         random_pk = choice(pk)
         random_player = Player.objects.filter(pk=random_pk)
-        cache.set("random_player_data", random_player, timeout=60 * 60)
-        print('got random player')
+        cache.set("random_player_data", random_player, timeout=60 * 60 * 24) #cache for 24 hours
         return random_player
 
 
