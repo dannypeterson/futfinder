@@ -36,11 +36,12 @@ function App() {
     try {
       setLoading(true)
       const response = await axios.get(`${baseURL}/api/player/`)
-      const futdbID = response.data[0].futdb_id
-      const nationID = response.data[0].nationality.futdb_id
-      const clubID = response.data[0].club.futdb_id
+      const player = response.data[0]['player']
+      const futdbID = player.futdb_id
+      const nationID = player.nationality.futdb_id
+      const clubID = player.club.futdb_id
 
-      setPlayerData(response.data[0])
+      setPlayerData(player)
       setPlayerImage(await fetchImage(`https://futdb.app/api/players/${futdbID}/image`))
       setPlayerNation(await fetchImage(`https://futdb.app/api/nations/${nationID}/image`))
       setPlayerClub(await fetchImage(`https://futdb.app/api/clubs/${clubID}/image`))

@@ -4,7 +4,7 @@ from rest_framework import routers
 from .views import PlayerSearchView
 
 router = routers.DefaultRouter()
-router.register(r"player", views.PlayerViewSet, "player")
+router.register(r"player", views.RandomPlayerViewSet, "player")
 
 urlpatterns = [
     path("", views.homepage, name="home"),

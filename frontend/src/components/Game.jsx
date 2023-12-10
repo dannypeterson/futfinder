@@ -28,6 +28,9 @@ const Game = ({
         club: false,
         nation: false
     })
+    const [gameProgress, setGameProgress] = useState('In progess')
+
+    // Todo CHECK LOCAL STORAGE FOR GAME PROGRESS
 
     // // CHECK LOCAL STORAGE FOR CORRECT ATTRIBUTES AND GUESS NUMBER
     // useEffect(() => {
@@ -35,6 +38,7 @@ const Game = ({
     //     if (attributesObject) {
     //         setRevealAttribute(JSON.parse(attributesObject))
     //     }
+
     //     const guessLocalStorage = window.localStorage.getItem('CURRENT_GUESS')
     //     if (guessLocalStorage) {
     //         setCurrentGuess(JSON.parse(guessLocalStorage))

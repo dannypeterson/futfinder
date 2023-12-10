@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Player, Club, Nation
+from .models import Player, Club, Nation, DailyRandomPlayer
 
 
 class NationSerializer(serializers.ModelSerializer):
@@ -35,3 +35,11 @@ class PlayerSerializer(serializers.ModelSerializer):
             "defending",
             "physicality",
         ]
+
+
+class RandomPlayerSerializer(serializers.ModelSerializer):
+    player = PlayerSerializer()
+
+    class Meta:
+        model = DailyRandomPlayer
+        fields = '__all__'

@@ -1,12 +1,13 @@
 from django.http import HttpResponse, JsonResponse
 from dotenv import load_dotenv
 from rest_framework import viewsets, permissions
-from .models import Player
-from .serializers import PlayerSerializer
+from rest_framework.response import Response
+from .models import Player, DailyRandomPlayer
+from .serializers import RandomPlayerSerializer
 from random import choice
 from django.views import View
 from django.core.cache import cache
-from .management.commands.get_random_player import schedule_player
+
 
 load_dotenv()
 
@@ -15,25 +16,16 @@ def homepage(response):
     return HttpResponse("Hello worldssdawa")
 
 
-class PlayerViewSet(viewsets.ModelViewSet):
+class RandomPlayerViewSet(viewsets.ModelViewSet):
     """
     Get random player HTTP response
     """
 
-    queryset = Player.objects.all()
-    serializer_class = PlayerSerializer
+    serializer_class = RandomPlayerSerializer
     # permission_classes = [permissions.IsAdminUser]
-
     def get_queryset(self):
-        # return scheduled player from cache
-        scheduled_player = cache.get("scheduled_player")
-        if scheduled_player:
-            return scheduled_player
-
-        pk = Player.objects.values_list("pk", flat=True)
-        random_pk = choice(pk)
-        random_player = Player.objects.filter(pk=random_pk)
-        return random_player
+        latest_instance = DailyRandomPlayer.objects.latest('id')
+        return DailyRandomPlayer.objects.filter(id=latest_instance.id)
 
 
 class PlayerSearchView(View):

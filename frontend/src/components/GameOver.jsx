@@ -15,15 +15,18 @@ const GameOver = ({ playerData, guessList, isCorrect, currentGuess }) => {
 
 
     const handleShare = async () => {
+        let currentDate = new Date()
+        let formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear().toString().slice(-2)}`;
+
         if (navigator.canShare) {
             try {
-                await navigator.share({ title: 'Futfinder', text: `Futfinder #1 ${currentGuess - 1}/${NUMBER_OF_GUESSES} \n ${shareResults} \n https://futfinder.vercel.app/` })
+                await navigator.share({ title: 'Futfinder', text: `Futfinder ${formattedDate}, ${currentGuess - 1}/${NUMBER_OF_GUESSES} \n ${shareResults} \n https://futfinder.vercel.app/` })
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await navigator.clipboard.writeText(`FutFinder #1 ${currentGuess - 1}/${NUMBER_OF_GUESSES} \n ${shareResults} \n https://futfinder.vercel.app/`)
+                await navigator.clipboard.writeText(`FutFinder ${formattedDate}, ${currentGuess - 1}/${NUMBER_OF_GUESSES} \n ${shareResults} \n https://futfinder.vercel.app/`)
                 setShowClipboardMsg(true)
                 setTimeout(() => {
                     setShowClipboardMsg(false)
