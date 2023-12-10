@@ -50,3 +50,6 @@ class Player(models.Model):
         today = date.today()
         age = today.year - self.dob.year
         return age
+
+class DailyRandomPlayer(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
