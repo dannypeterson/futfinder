@@ -22,9 +22,10 @@ class RandomPlayerViewSet(viewsets.ModelViewSet):
     """
 
     serializer_class = RandomPlayerSerializer
+
     # permission_classes = [permissions.IsAdminUser]
     def get_queryset(self):
-        latest_instance = DailyRandomPlayer.objects.latest('id')
+        latest_instance = DailyRandomPlayer.objects.latest("id")
         return DailyRandomPlayer.objects.filter(id=latest_instance.id)
 
 
