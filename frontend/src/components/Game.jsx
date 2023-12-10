@@ -11,7 +11,7 @@ const Game = ({
     playerClub,
     playerImage,
     playerNation,
-    getPlayerFromDB
+    getPlayerFromDB,
 }) => {
 
 
@@ -28,32 +28,42 @@ const Game = ({
         club: false,
         nation: false
     })
-    const [gameProgress, setGameProgress] = useState('In progess')
 
-    // Todo CHECK LOCAL STORAGE FOR GAME PROGRESS
+    // CHECK LOCAL STORAGE FOR CORRECT ATTRIBUTES AND GUESS NUMBER
+    useEffect(() => {
+        const attributesObject = window.sessionStorage.getItem('REVEAL_ATTRIBUTES')
+        if (attributesObject) {
+            setRevealAttribute(JSON.parse(attributesObject))
+        }
 
-    // // CHECK LOCAL STORAGE FOR CORRECT ATTRIBUTES AND GUESS NUMBER
-    // useEffect(() => {
-    //     const attributesObject = window.localStorage.getItem('REVEAL_ATTRIBUTES')
-    //     if (attributesObject) {
-    //         setRevealAttribute(JSON.parse(attributesObject))
-    //     }
+        const guessSessionStorage = window.sessionStorage.getItem('CURRENT_GUESS')
+        if (guessSessionStorage) {
+            setCurrentGuess(JSON.parse(guessSessionStorage))
+        }
+    }, [])
 
-    //     const guessLocalStorage = window.localStorage.getItem('CURRENT_GUESS')
-    //     if (guessLocalStorage) {
-    //         setCurrentGuess(JSON.parse(guessLocalStorage))
-    //     }
-    // }, [])
+    // CHECK GAME PROGRESS
+    useEffect(() => {
+        const progress = window.sessionStorage.getItem('GAME_COMPLETE')
+        if (progress) {
+            setGameOver(true)
+        }
 
-    // // CHECK LOCAL STORAGE IF ANY GUESSES HAVE ALREADY BEEN MADE
-    // useEffect(() => {
-    //     const userGuessList = window.localStorage.getItem('USER_GUESS_LIST')
-    //     if (playerData) {
-    //         if (userGuessList) {
-    //             setGuessList(JSON.parse(userGuessList))
-    //         }
-    //     }
-    // }, [playerData])
+        const isCorrect = window.sessionStorage.getItem('IS_CORRECT')
+        if (isCorrect) {
+            setIsCorrect(true)
+        }
+    }, [])
+
+    // CHECK LOCAL STORAGE IF ANY GUESSES HAVE ALREADY BEEN MADE
+    useEffect(() => {
+        const userGuessList = window.sessionStorage.getItem('USER_GUESS_LIST')
+        if (playerData) {
+            if (userGuessList) {
+                setGuessList(JSON.parse(userGuessList))
+            }
+        }
+    }, [playerData])
 
 
     const updateGuessList = () => {
@@ -67,13 +77,15 @@ const Game = ({
             ...guessList, updatedUserGuess
         ]
         setGuessList(updatedGuessList)
-        window.localStorage.setItem('USER_GUESS_LIST', JSON.stringify(updatedGuessList))
+        window.sessionStorage.setItem('USER_GUESS_LIST', JSON.stringify(updatedGuessList))
     }
 
     const checkCorrectGuess = () => {
         if (playerData.futdb_id === userGuess.futdb_id) {
             setIsCorrect(true)
             setGameOver(true)
+            window.sessionStorage.setItem('GAME_COMPLETE', true)
+            window.sessionStorage.setItem('IS_CORRECT', true)
             return true
         }
         return false
@@ -87,7 +99,7 @@ const Game = ({
         if (playerAttribute === guessAttribute) {
             setRevealAttribute((prevState) => {
                 const updatedState = { ...prevState, [attribute]: true }
-                window.localStorage.setItem('REVEAL_ATTRIBUTES', JSON.stringify(updatedState))
+                window.sessionStorage.setItem('REVEAL_ATTRIBUTES', JSON.stringify(updatedState))
                 return updatedState
             })
         }
@@ -96,7 +108,7 @@ const Game = ({
     const incrementGuess = () => {
         setCurrentGuess((prevGuess) => {
             const updatedGuess = prevGuess + 1
-            window.localStorage.setItem('CURRENT_GUESS', JSON.stringify(updatedGuess))
+            window.sessionStorage.setItem('CURRENT_GUESS', JSON.stringify(updatedGuess))
             return updatedGuess
         })
         if (currentGuess >= NUMBER_OF_GUESSES) {
@@ -158,8 +170,8 @@ const Game = ({
 
     // RESTART GAME
     const resetGameStorage = () => {
-        const localStorageKeys = ['REVEAL_ATTRIBUTES', 'CURRENT_GUESS', 'USER_GUESS_LIST']
-        localStorageKeys.forEach((key) => { window.localStorage.removeItem(key) })
+        const sessionStorageKeys = ['REVEAL_ATTRIBUTES', 'CURRENT_GUESS', 'USER_GUESS_LIST']
+        sessionStorageKeys.forEach((key) => { window.sessionStorage.removeItem(key) })
     }
 
     const resetState = () => {
